@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "345406473458",
+    "project_id": "flitter-3db84",
+    "storage_bucket": "flitter-3db84.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:345406473458:android:c22bdfa85c791cf43f3c6b",
+        "android_client_info": {
+          "package_name": "com.connormurphy.flitter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "345406473458-cfnuaebnde2hfd3aqak3b5p7ll48c6sg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.connormurphy.flitter",
+            "certificate_hash": "427555001b95f283c90e3830dfeac6524e3b58f8"
+          }
+        },
+        {
+          "client_id": "345406473458-jcjsshc9l620tf6t5v53f7c215pji587.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADmTCCKeXMSBT3v8nvDHe8hfX6_39a2Zw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "345406473458-jcjsshc9l620tf6t5v53f7c215pji587.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
