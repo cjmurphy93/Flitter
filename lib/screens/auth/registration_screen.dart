@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flitter/components/rounded_button.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static String id = 'registration_screen';
@@ -59,33 +60,33 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           SizedBox(
             height: 24.0,
           ),
-          // RoundedButton(
-          //   title: 'Register',
-          //   onPressed: () async {
-          //     setState(() {
-          //       showSpinner = true;
-          //     });
-          //     try {
-          //       final newUser = await _auth.createUserWithEmailAndPassword(
-          //         email: email,
-          //         password: password,
-          //       );
-          //       if (newUser != null) {
-          //         Navigator.pushNamed(
-          //           context,
-          //           ChatScreen.id,
-          //         );
-          //       }
-          //     } catch (e) {
-          //       print(e);
-          //     } finally {
-          //       setState(() {
-          //         showSpinner = false;
-          //       });
-          //     }
-          //   },
-          //   color: Colors.blueAccent,
-          // ),
+          RoundedButton(
+            title: 'Register',
+            onPressed: () async {
+              setState(() {
+                // showSpinner = true;
+              });
+              try {
+                final newUser = await _auth.createUserWithEmailAndPassword(
+                  email: '$email',
+                  password: '$password',
+                );
+                if (newUser != null) {
+                  // Navigator.pushNamed(
+                  //   context,
+                  //   ChatScreen.id,
+                  // );
+                }
+              } catch (e) {
+                print(e);
+              } finally {
+                setState(() {
+                  // showSpinner = false;
+                });
+              }
+            },
+            color: Colors.blueAccent,
+          ),
         ],
       ),
     );
