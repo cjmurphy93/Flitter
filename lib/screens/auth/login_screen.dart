@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flitter/components/rounded_button.dart';
+import 'package:loading_overlay/loading_overlay.dart';
+import 'package:flitter/constants.dart';
 
 class LoginScreen extends StatefulWidget {
   static String id = 'login_screen';
@@ -17,28 +19,26 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return
-    // return Scaffold(
-      // backgroundColor: Colors.white,
-      // body: LoadingOverlay(
-      //   isLoading: showSpinner,
-      //   opacity: 0.2,
-      //   child: Padding(
-       Padding(
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: LoadingOverlay(
+        isLoading: showSpinner,
+        opacity: 0.2,
+        child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Flexible(
-                child: Hero(
-                  tag: 'logo',
-                  child: Container(
-                    height: 200.0,
-                    child: Image.asset('images/logo.png'),
-                  ),
-                ),
-              ),
+              // Flexible(
+              //   child: Hero(
+              //     tag: 'logo',
+              //     child: Container(
+              //       height: 200.0,
+              //       child: Image.asset('images/logo.png'),
+              //     ),
+              //   ),
+              // ),
               SizedBox(
                 height: 48.0,
               ),
@@ -48,9 +48,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 onChanged: (value) {
                   email = value;
                 },
-                // decoration: kTextFieldDecoration.copyWith(
-                //   hintText: 'Enter your email',
-                // ),
+                decoration: kTextFieldDecoration.copyWith(
+                  hintText: 'Enter your email',
+                ),
               ),
               SizedBox(
                 height: 8.0,
@@ -61,9 +61,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 onChanged: (value) {
                   password = value;
                 },
-                // decoration: kTextFieldDecoration.copyWith(
-                //   hintText: 'Enter your password',
-                // ),
+                decoration: kTextFieldDecoration.copyWith(
+                  hintText: 'Enter your password',
+                ),
               ),
               SizedBox(
                 height: 24.0,
@@ -97,8 +97,8 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ],
           ),
-        );
-    //   ),
-    // );
+        ),
+      ),
+    );
   }
 }
