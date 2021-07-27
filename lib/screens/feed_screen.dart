@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 final _firestore = FirebaseFirestore.instance;
-User loggedInUser;
+User? loggedInUser;
 
 class FeedScreen extends StatefulWidget {
   static String id = 'feed_screen';
@@ -17,7 +17,7 @@ class _FeedScreenState extends State<FeedScreen> {
   final messageTextController = TextEditingController();
   final _auth = FirebaseAuth.instance;
 
-  String messageText;
+  String? messageText;
 
   @override
   void initState() {
@@ -80,7 +80,7 @@ class _FeedScreenState extends State<FeedScreen> {
                       messageTextController.clear();
                       _firestore.collection('messages').add({
                         'text': messageText,
-                        'sender': loggedInUser.email,
+                        'sender': loggedInUser!.email,
                         'timeStamp': Timestamp.now(),
                         'ts': FieldValue.serverTimestamp(),
                       });
@@ -111,14 +111,14 @@ class MessagesStream extends StatelessWidget {
       builder: (context, snapshot) {
         List<MessageBubble> messageBubbles = [];
         if (snapshot.hasData) {
-          final messages = snapshot.data.docs;
+          final messages = snapshot.data!.docs;
           for (var message in messages) {
             final data = message.data() as Map;
             final messageText = data['text'];
             final messageSender = data['sender'];
             final messageTs = data['timeStamp'];
 
-            final currentUser = loggedInUser.email;
+            final currentUser = loggedInUser!.email;
 
             final messageBubble = MessageBubble(
               sender: messageSender,
@@ -147,15 +147,15 @@ class MessagesStream extends StatelessWidget {
 
 class MessageBubble extends StatelessWidget {
   MessageBubble({
-    this.sender,
-    this.text,
+    required this.sender,
+    required this.text,
     this.ts,
-    this.isMe,
+    required this.isMe,
   });
 
   final String sender;
   final String text;
-  final Timestamp ts;
+  final Timestamp? ts;
   final bool isMe;
 
   @override
