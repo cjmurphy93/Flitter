@@ -37,7 +37,6 @@ class _FeedScreenState extends State<FeedScreen> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,12 +77,14 @@ class _FeedScreenState extends State<FeedScreen> {
                     style: kFlatButtonStyle,
                     onPressed: () {
                       messageTextController.clear();
-                      _firestore.collection('messages').add({
-                        'text': messageText,
-                        'sender': loggedInUser!.email,
-                        'timeStamp': Timestamp.now(),
-                        'ts': FieldValue.serverTimestamp(),
-                      });
+                      _firestore.collection('messages').add(
+                        {
+                          'text': messageText,
+                          'sender': loggedInUser!.email,
+                          'timeStamp': Timestamp.now(),
+                          'ts': FieldValue.serverTimestamp(),
+                        },
+                      );
                     },
                     child: Text(
                       'Send',
@@ -106,7 +107,10 @@ class MessagesStream extends StatelessWidget {
     return StreamBuilder<QuerySnapshot>(
       stream: _firestore
           .collection('messages')
-          .orderBy('ts', descending: true)
+          .orderBy(
+            'ts',
+            descending: true,
+          )
           .snapshots(),
       builder: (context, snapshot) {
         List<MessageBubble> messageBubbles = [];
@@ -164,7 +168,7 @@ class MessageBubble extends StatelessWidget {
       padding: EdgeInsets.all(10.0),
       child: Column(
         crossAxisAlignment:
-        isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+            isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           Text(
             // '$sender @ $ts',
@@ -178,15 +182,15 @@ class MessageBubble extends StatelessWidget {
             elevation: 5.0,
             borderRadius: isMe
                 ? BorderRadius.only(
-              topLeft: Radius.circular(30.0),
-              bottomLeft: Radius.circular(30.0),
-              bottomRight: Radius.circular(30.0),
-            )
+                    topLeft: Radius.circular(30.0),
+                    bottomLeft: Radius.circular(30.0),
+                    bottomRight: Radius.circular(30.0),
+                  )
                 : BorderRadius.only(
-              topRight: Radius.circular(30.0),
-              bottomLeft: Radius.circular(30.0),
-              bottomRight: Radius.circular(30.0),
-            ),
+                    topRight: Radius.circular(30.0),
+                    bottomLeft: Radius.circular(30.0),
+                    bottomRight: Radius.circular(30.0),
+                  ),
             color: isMe ? Colors.lightBlueAccent : Colors.white,
             child: Padding(
               padding: EdgeInsets.symmetric(
