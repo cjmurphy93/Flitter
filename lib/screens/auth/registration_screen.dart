@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flitter/services/auth_services.dart';
 import 'package:flitter/components/rounded_button.dart';
 import 'package:flitter/constants.dart';
 import 'package:loading_overlay/loading_overlay.dart';
@@ -12,7 +12,7 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  final _auth = FirebaseAuth.instance;
+  final AuthService _auth = AuthService();
   bool showSpinner = false;
   String? email;
   String? password;
@@ -75,16 +75,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     showSpinner = true;
                   });
                   try {
-                    final newUser = await _auth.createUserWithEmailAndPassword(
-                      email: '$email',
-                      password: '$password',
+                    _auth.signUp(
+                      email,
+                      password,
                     );
-                    if (newUser != null) {
-                      // Navigator.pushNamed(
-                      //   context,
-                      //   ChatScreen.id,
-                      // );
-                    }
                   } catch (e) {
                     print(e);
                   } finally {
