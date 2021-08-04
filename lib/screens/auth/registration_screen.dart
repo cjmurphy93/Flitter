@@ -3,6 +3,7 @@ import 'package:flitter/services/auth_services.dart';
 import 'package:flitter/components/rounded_button.dart';
 import 'package:flitter/constants.dart';
 import 'package:loading_overlay/loading_overlay.dart';
+import 'package:flitter/screens/feed_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static String id = 'registration_screen';
@@ -78,6 +79,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     _auth.signUp(
                       email,
                       password,
+                    );
+                    Navigator.pushNamed(
+                      context,
+                      FeedScreen.id,
                     );
                   } catch (e) {
                     print(e);

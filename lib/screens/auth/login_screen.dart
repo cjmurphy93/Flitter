@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flitter/services/auth_services.dart';
 import 'package:flitter/components/rounded_button.dart';
 import 'package:loading_overlay/loading_overlay.dart';
+import 'package:flitter/screens/feed_screen.dart';
 import 'package:flitter/constants.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -78,6 +79,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     _auth.signIn(
                       email,
                       password,
+                    );
+                    Navigator.pushNamed(
+                      context,
+                      FeedScreen.id,
                     );
                   } catch (e) {
                     print(e);
