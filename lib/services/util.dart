@@ -18,4 +18,20 @@ class PostService {
       );
     }).toList();
   }
+
+  PostModel? _postFromSnapshot(DocumentSnapshot snapshot) {
+    return snapshot.exists
+        ? PostModel(
+            id: snapshot.id,
+            text: snapshot['text'] ?? '',
+            creator: snapshot['creator'] ?? '',
+            retweet: snapshot['retweet'] ?? false,
+            numLikes: snapshot['numLikes'] ?? 0,
+            numRetweets: snapshot['numRetweets'] ?? 0,
+            originalId: snapshot['originalId'] ?? null,
+            timestamp: snapshot['timestamp'] ?? 0,
+            ref: snapshot.reference,
+          )
+        : null;
+  }
 }
