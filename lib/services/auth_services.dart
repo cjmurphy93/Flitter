@@ -46,11 +46,11 @@ class AuthService {
 
   Future signIn(email, password) async {
     try {
-      User user = (await auth.signInWithEmailAndPassword(
+      UserCredential user = (await auth.signInWithEmailAndPassword(
         email: email,
         password: password,
-      )) as User;
-      _userFromFirebaseUser(user);
+      ));
+      _userFromFirebaseUser(user.user);
     } on FirebaseAuthException catch (e) {
       print(e);
     } catch (e) {

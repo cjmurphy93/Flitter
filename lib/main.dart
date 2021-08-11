@@ -31,7 +31,10 @@ class Flitter extends StatelessWidget {
           );
         }
 
-        return Text("Loading");
+        return Text(
+          "Loading",
+          textDirection: TextDirection.ltr,
+        );
       },
     );
   }

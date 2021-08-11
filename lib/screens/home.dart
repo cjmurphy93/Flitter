@@ -4,6 +4,7 @@ import 'package:flitter/services/auth_services.dart';
 import 'package:flitter/screens/add_post_screen.dart';
 
 class Home extends StatelessWidget {
+  static String id = 'home_screen';
   @override
   Widget build(BuildContext context) {
     final AuthService _authService = AuthService();

@@ -4,6 +4,7 @@ import 'package:flitter/components/rounded_button.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:flitter/screens/feed_screen.dart';
 import 'package:flitter/constants.dart';
+import 'package:flitter/screens/home.dart';
 
 class LoginScreen extends StatefulWidget {
   static String id = 'login_screen';
@@ -82,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     );
                     Navigator.pushNamed(
                       context,
-                      FeedScreen.id,
+                      '/',
                     );
                   } catch (e) {
                     print(e);
