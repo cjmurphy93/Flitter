@@ -1,6 +1,7 @@
 import 'package:flitter/components/rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flitter/services/auth_services.dart';
+import 'package:flitter/screens/add_post_screen.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -18,6 +19,11 @@ class Home extends StatelessWidget {
           )
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, AddPost.id);
+          },
+          child: Icon(Icons.add)),
     );
   }
 }

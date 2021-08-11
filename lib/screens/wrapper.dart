@@ -4,6 +4,7 @@ import 'package:flitter/screens/welcome_screen.dart';
 import 'package:flitter/screens/auth/registration_screen.dart';
 import 'package:flitter/screens/auth/login_screen.dart';
 import 'package:flitter/screens/feed_screen.dart';
+import 'package:flitter/screens/add_post_screen.dart';
 import 'package:flitter/models/user.dart';
 
 class Wrapper extends StatelessWidget {
@@ -25,6 +26,7 @@ class Wrapper extends StatelessWidget {
         LoginScreen.id: (context) => LoginScreen(),
         RegistrationScreen.id: (context) => RegistrationScreen(),
         FeedScreen.id: (context) => FeedScreen(),
+        AddPost.id: (context) => AddPost(),
       },
     );
   }
