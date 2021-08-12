@@ -4,8 +4,8 @@ import 'package:flitter/screens/home.dart';
 import 'package:flitter/screens/welcome_screen.dart';
 import 'package:flitter/screens/auth/registration_screen.dart';
 import 'package:flitter/screens/auth/login_screen.dart';
-import 'package:flitter/screens/feed_screen.dart';
-import 'package:flitter/screens/add_post_screen.dart';
+import 'package:flitter/screens/posts/feed_screen.dart';
+import 'package:flitter/screens/posts/add_post_screen.dart';
 import 'package:flitter/models/user.dart';
 
 class Wrapper extends StatelessWidget {
