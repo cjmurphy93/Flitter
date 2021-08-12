@@ -14,28 +14,29 @@ class Wrapper extends StatelessWidget {
     final user = Provider.of<UserModel?>(context);
 
     print(user);
-    // if (user == null) {
-    //   return WelcomeScreen();
-    // }
+    if (user == null) {
+      return MaterialApp(
+        title: 'Flitter',
+        home: WelcomeScreen(),
+        initialRoute: WelcomeScreen.id,
+        routes: {
+          WelcomeScreen.id: (context) => WelcomeScreen(),
+          LoginScreen.id: (context) => LoginScreen(),
+          RegistrationScreen.id: (context) => RegistrationScreen(),
+        },
+      );
+    }
 
-    return user == null
-        ? MaterialApp(
-            title: 'Flitter',
-            home: WelcomeScreen(),
-            initialRoute: WelcomeScreen.id,
-            routes: {
-              WelcomeScreen.id: (context) => WelcomeScreen(),
-              LoginScreen.id: (context) => LoginScreen(),
-              RegistrationScreen.id: (context) => RegistrationScreen(),
-            },
-          )
-        : MaterialApp(
+    return  MaterialApp(
             title: 'Flitter',
             home: Home(),
             initialRoute: '/',
             routes: {
               FeedScreen.id: (context) => FeedScreen(),
               AddPost.id: (context) => AddPost(),
+              WelcomeScreen.id: (context) => WelcomeScreen(),
+              LoginScreen.id: (context) => LoginScreen(),
+              RegistrationScreen.id: (context) => RegistrationScreen(),
             },
           );
   }
