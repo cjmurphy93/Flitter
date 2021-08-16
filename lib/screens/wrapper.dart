@@ -6,6 +6,7 @@ import 'package:flitter/screens/auth/registration_screen.dart';
 import 'package:flitter/screens/auth/login_screen.dart';
 import 'package:flitter/screens/posts/feed_screen.dart';
 import 'package:flitter/screens/posts/add_post_screen.dart';
+import 'package:flitter/screens/profile/profile.dart';
 import 'package:flitter/models/user.dart';
 
 class Wrapper extends StatelessWidget {
@@ -27,17 +28,18 @@ class Wrapper extends StatelessWidget {
       );
     }
 
-    return  MaterialApp(
-            title: 'Flitter',
-            home: Home(),
-            initialRoute: '/',
-            routes: {
-              FeedScreen.id: (context) => FeedScreen(),
-              AddPost.id: (context) => AddPost(),
-              WelcomeScreen.id: (context) => WelcomeScreen(),
-              LoginScreen.id: (context) => LoginScreen(),
-              RegistrationScreen.id: (context) => RegistrationScreen(),
-            },
-          );
+    return MaterialApp(
+      title: 'Flitter',
+      home: Home(),
+      initialRoute: '/',
+      routes: {
+        FeedScreen.id: (context) => FeedScreen(),
+        AddPost.id: (context) => AddPost(),
+        Profile.id: (context) => Profile(),
+        WelcomeScreen.id: (context) => WelcomeScreen(),
+        LoginScreen.id: (context) => LoginScreen(),
+        RegistrationScreen.id: (context) => RegistrationScreen(),
+      },
+    );
   }
 }

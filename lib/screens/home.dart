@@ -2,6 +2,7 @@ import 'package:flitter/components/rounded_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flitter/services/auth_services.dart';
 import 'package:flitter/screens/posts/add_post_screen.dart';
+import 'package:flitter/screens/profile/profile.dart';
 
 class Home extends StatelessWidget {
   static String id = 'home_screen';
@@ -36,7 +37,7 @@ class Home extends StatelessWidget {
             ListTile(
               title: Text('Profile'),
               onTap: () {
-                Navigator.pushNamed(context, '/profile');
+                Navigator.pushNamed(context, Profile.id);
               },
             ),
             ListTile(

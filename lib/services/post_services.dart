@@ -4,21 +4,40 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flitter/models/post.dart';
 
 class PostService {
+  // List<PostModel>? _postListFromSnapshot(QuerySnapshot snapshot) {
+  //   // print(snapshot.docs);
+  //   return snapshot.docs.map((doc) {
+  //     return PostModel(
+  //       id: doc.id,
+  //       text: doc['text'] ?? '',
+  //       creator: doc['creator'] ?? '',
+  //       retweet: doc['retweet'] ?? false,
+  //       numLikes: doc['numLikes'] ?? 0,
+  //       numRetweets: doc['numRetweets'] ?? 0,
+  //       originalId: doc['originalId'] ?? null,
+  //       timestamp: doc['timestamp'] ?? 0,
+  //       ref: doc.reference,
+  //     );
+  //   }).toList();
+  // }
+
   List<PostModel> _postListFromSnapshot(QuerySnapshot snapshot) {
+    print(snapshot.docs[0].reference);
     return snapshot.docs.map((doc) {
       return PostModel(
         id: doc.id,
-        text: doc['text'] ?? '',
-        creator: doc['creator'] ?? '',
-        retweet: doc['retweet'] ?? false,
-        numLikes: doc['numLikes'] ?? 0,
-        numRetweets: doc['numRetweets'] ?? 0,
-        originalId: doc['originalId'] ?? null,
-        timestamp: doc['timestamp'] ?? 0,
-        ref: doc.reference,
+        text: doc.get('text') ?? '',
+        creator: doc.get('creator') ?? '',
+        retweet: doc.get('retweet') ?? false,
+        numLikes: doc.get('numLikes') ?? 0,
+        numRetweets: doc.get('numRetweets') ?? 0,
+        originalId: doc.get('originalId') ?? null,
+        timestamp: doc.get('timestamp') ?? 0,
+        // ref: doc.reference,
       );
     }).toList();
   }
+
 
   PostModel? _postFromSnapshot(DocumentSnapshot snapshot) {
     return snapshot.exists
@@ -62,5 +81,20 @@ class PostService {
     );
   }
 
+  Stream<List<PostModel>> getPostsByUser(uid) {
+    return FirebaseFirestore.instance
+        .collection("posts")
+        .where('creator', isEqualTo: uid)
+        .snapshots()
+        .map(_postListFromSnapshot);
+  }
+
+  // Stream<QuerySnapshot<Map<String, dynamic>>> getPostsByUser(uid) {
+  //   return FirebaseFirestore.instance
+  //       .collection("posts")
+  //       .where('creator', isEqualTo: uid)
+  //       .snapshots();
+  //       // .map(_postListFromSnapshot);
+  // }
 
 }
