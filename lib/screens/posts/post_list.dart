@@ -10,8 +10,8 @@ class PostsList extends StatefulWidget {
 class _PostsListState extends State<PostsList> {
   @override
   Widget build(BuildContext context) {
-    final posts = Provider.of<List<PostModel>>(context);
-    // final posts = Provider.of<List<PostModel>>(context) ?? [];
+    // final posts = Provider.of<List<PostModel>>(context);
+    final posts = Provider.of<List<PostModel>?>(context) ?? [];
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       itemCount: posts.length,

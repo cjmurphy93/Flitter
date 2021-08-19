@@ -24,7 +24,14 @@ class Flitter extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           return StreamProvider<UserModel?>.value(
             value: AuthService().user,
-            initialData: null,
+
+            initialData: UserModel(
+              id: '',
+              name: '',
+              profileImageUrl: '',
+              bannerImageUrl: '',
+              email: '',
+            ),
             child: MaterialApp(
               home: Wrapper(),
             ),

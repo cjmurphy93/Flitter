@@ -7,6 +7,7 @@ import 'package:flitter/screens/auth/login_screen.dart';
 import 'package:flitter/screens/posts/feed_screen.dart';
 import 'package:flitter/screens/posts/add_post_screen.dart';
 import 'package:flitter/screens/profile/profile.dart';
+import 'package:flitter/screens/profile/edit_profile.dart';
 import 'package:flitter/models/user.dart';
 
 class Wrapper extends StatelessWidget {
@@ -36,6 +37,7 @@ class Wrapper extends StatelessWidget {
         FeedScreen.id: (context) => FeedScreen(),
         AddPost.id: (context) => AddPost(),
         Profile.id: (context) => Profile(),
+        EditProfile.id: (context) => EditProfile(),
         WelcomeScreen.id: (context) => WelcomeScreen(),
         LoginScreen.id: (context) => LoginScreen(),
         RegistrationScreen.id: (context) => RegistrationScreen(),

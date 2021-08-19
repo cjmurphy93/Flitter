@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flitter/services/user_services.dart';
 
-class Edit extends StatefulWidget {
+class EditProfile extends StatefulWidget {
+  static String id = 'edit_profile_screen';
+
   @override
-  _EditState createState() => _EditState();
+  _EditProfileState createState() => _EditProfileState();
 }
 
-class _EditState extends State<Edit> {
+class _EditProfileState extends State<EditProfile> {
   UserService _userService = UserService();
   File? _profileImage;
   File? _bannerImage;

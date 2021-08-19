@@ -4,18 +4,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flitter/models/post.dart';
 
 class PostService {
-  List<PostModel> _postListFromSnapshot(QuerySnapshot snapshot) {
-    print(snapshot.docs[0].reference);
+  List<PostModel>? _postListFromSnapshot(QuerySnapshot<Map<String, dynamic>> snapshot) {
     return snapshot.docs.map((doc) {
       return PostModel(
         id: doc.id,
         text: doc.get('text') ?? '',
         creator: doc.get('creator') ?? '',
         retweet: doc.get('retweet') ?? false,
-        numLikes: doc.get('numLikes') ?? 0,
-        numRetweets: doc.get('numRetweets') ?? 0,
-        originalId: doc.get('originalId') ?? null,
-        timestamp: doc.get('timestamp') ?? 0,
+        numLikes: doc.data()['numLikes'] ?? 0,
+        numRetweets: doc.data()['numRetweets'] ?? 0,
+        originalId: doc.data()['originalId'] ?? null,
+        timestamp: doc['timestamp'] ?? 0,
         ref: doc.reference,
       );
     }).toList();
@@ -63,7 +62,7 @@ class PostService {
     );
   }
 
-  Stream<List<PostModel>> getPostsByUser(uid) {
+  Stream<List<PostModel>?> getPostsByUser(uid) {
     return FirebaseFirestore.instance
         .collection("posts")
         .where('creator', isEqualTo: uid)

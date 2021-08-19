@@ -1,22 +1,20 @@
 import 'dart:collection';
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flitter/models/user.dart';
-
 import 'package:flitter/services/utils.dart';
 
 class UserService {
   UtilsService _utilsService = UtilsService();
 
-  UserModel? _userFromFirebaseSnapshot(DocumentSnapshot snapshot) {
+  UserModel? _userFromFirebaseSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
     return snapshot != null
         ? UserModel(
             id: snapshot.id,
             name: snapshot['name'],
-            profileImageUrl: snapshot['profileImageUrl'],
-            bannerImageUrl: snapshot['bannerImageUrl'],
+            profileImageUrl: snapshot.data()?['profileImageUrl'] ?? '',
+            bannerImageUrl: snapshot.data()?['bannerImageUrl'] ?? '',
             email: snapshot['email'],
           )
         : null;
