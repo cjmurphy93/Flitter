@@ -21,7 +21,6 @@ class _ProfileState extends State<Profile> {
       child: Scaffold(
         body: Container(
           child: PostsList(),
-
         ),
       ),
       // create: (context) {
