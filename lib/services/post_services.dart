@@ -4,23 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flitter/models/post.dart';
 
 class PostService {
-  // List<PostModel>? _postListFromSnapshot(QuerySnapshot snapshot) {
-  //   // print(snapshot.docs);
-  //   return snapshot.docs.map((doc) {
-  //     return PostModel(
-  //       id: doc.id,
-  //       text: doc['text'] ?? '',
-  //       creator: doc['creator'] ?? '',
-  //       retweet: doc['retweet'] ?? false,
-  //       numLikes: doc['numLikes'] ?? 0,
-  //       numRetweets: doc['numRetweets'] ?? 0,
-  //       originalId: doc['originalId'] ?? null,
-  //       timestamp: doc['timestamp'] ?? 0,
-  //       ref: doc.reference,
-  //     );
-  //   }).toList();
-  // }
-
   List<PostModel> _postListFromSnapshot(QuerySnapshot snapshot) {
     print(snapshot.docs[0].reference);
     return snapshot.docs.map((doc) {
@@ -33,13 +16,10 @@ class PostService {
         numRetweets: doc.get('numRetweets') ?? 0,
         originalId: doc.get('originalId') ?? null,
         timestamp: doc.get('timestamp') ?? 0,
-        // ref: doc.reference,
+        ref: doc.reference,
       );
     }).toList();
   }
-
-
-
 
   PostModel? _postFromSnapshot(DocumentSnapshot snapshot) {
     return snapshot.exists
