@@ -31,7 +31,7 @@ class UserService {
   }
 
   Future<void> updateProfile(
-      File _bannerImage, File _profileImage, String name) async {
+      File? _bannerImage, File? _profileImage, String name) async {
     String bannerImageUrl = '';
     String profileImageUrl = '';
 
