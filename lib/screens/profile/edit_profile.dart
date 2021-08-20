@@ -36,7 +36,7 @@ class _EditProfileState extends State<EditProfile> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-          FlatButton(
+          TextButton(
             onPressed: () async {
               await _userService.updateProfile(
                 _bannerImage,
@@ -54,7 +54,7 @@ class _EditProfileState extends State<EditProfile> {
         child: new Form(
           child: Column(
             children: [
-              FlatButton(
+              TextButton(
                 onPressed: () => getImage(0),
                 child: _profileImage == null
                     ? Icon(Icons.person)
@@ -63,7 +63,7 @@ class _EditProfileState extends State<EditProfile> {
                         height: 100,
                       ),
               ),
-              FlatButton(
+              TextButton(
                 onPressed: () => getImage(1),
                 child: _bannerImage == null
                     ? Icon(Icons.person)

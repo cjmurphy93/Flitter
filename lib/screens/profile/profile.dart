@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:flitter/services/post_services.dart';
 import 'package:flitter/services/user_services.dart';
 import 'package:flitter/screens/posts/post_list.dart';
+import 'package:flitter/screens/profile/edit_profile.dart';
 import 'package:flitter/models/user.dart';
 
 class Profile extends StatefulWidget {
@@ -55,6 +56,9 @@ class _ProfileState extends State<Profile> {
                     background: Image.network(
                       Provider.of<UserModel?>(context)!.bannerImageUrl ?? '',
                       fit: BoxFit.cover,
+                      errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                        return Text('Your error widget...');
+                      },
                     ),
                   ),
                 ),
@@ -76,10 +80,13 @@ class _ProfileState extends State<Profile> {
                                         '',
                                     height: 60,
                                     fit: BoxFit.cover,
+                                    errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                                      return Text('Your error widget...');
+                                    },
                                   ),
-                                  FlatButton(
+                                  TextButton(
                                     onPressed: () {
-                                      Navigator.pushNamed(context, '/edit');
+                                      Navigator.pushNamed(context, EditProfile.id);
                                     },
                                     child: Text("Edit Profile"),
                                   )

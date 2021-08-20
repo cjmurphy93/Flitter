@@ -8,7 +8,8 @@ import 'package:flitter/services/utils.dart';
 class UserService {
   UtilsService _utilsService = UtilsService();
 
-  UserModel? _userFromFirebaseSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
+  UserModel? _userFromFirebaseSnapshot(
+      DocumentSnapshot<Map<String, dynamic>> snapshot) {
     return snapshot != null
         ? UserModel(
             id: snapshot.id,
