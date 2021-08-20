@@ -77,4 +77,48 @@ class UserService {
         .snapshots()
         .map(_userListFromQuerySnapshot);
   }
+
+  Future<void> followUser(uid) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('following')
+        .doc(uid)
+        .set({});
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('followers')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .set({});
+  }
+
+  Future<void> unfollowUser(uid) async {
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('following')
+        .doc(uid)
+        .delete();
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .collection('followers')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .delete();
+  }
+
+  Stream<bool> isFollowing(uid, otherId) {
+    return FirebaseFirestore.instance
+        .collection("users")
+        .doc(uid)
+        .collection("following")
+        .doc(otherId)
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.exists;
+    });
+  }
 }
