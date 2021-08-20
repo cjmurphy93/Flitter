@@ -53,4 +53,28 @@ class UserService {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .update(data);
   }
+
+  List<UserModel> _userListFromQuerySnapshot(
+      QuerySnapshot<Map<String, dynamic>> snapshot) {
+    return snapshot.docs.map((doc) {
+      return UserModel(
+        id: doc.id,
+        name: doc.data()['name'] ?? '',
+        profileImageUrl: doc.data()['profileImageUrl'] ?? '',
+        bannerImageUrl: doc.data()['bannerImageUrl'] ?? '',
+        email: doc.data()['email'] ?? '',
+      );
+    }).toList();
+  }
+
+  Stream<List<UserModel>> queryByName(search) {
+    return FirebaseFirestore.instance
+        .collection("users")
+        .orderBy("name")
+        .startAt([search])
+        .endAt([search + '\uf8ff'])
+        .limit(10)
+        .snapshots()
+        .map(_userListFromQuerySnapshot);
+  }
 }
