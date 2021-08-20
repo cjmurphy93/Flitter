@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flitter/screens/profile/user_list.dart';
 import 'package:flitter/services/user_services.dart';
+import 'package:flitter/models/user.dart';
 
 class Search extends StatefulWidget {
   @override
@@ -13,7 +14,7 @@ class _SearchState extends State<Search> {
   String search = '';
   @override
   Widget build(BuildContext context) {
-    return StreamProvider.value(
+    return StreamProvider<List<UserModel>?>.value(
       initialData: [],
       value: _userService.queryByName(search),
       child: Column(

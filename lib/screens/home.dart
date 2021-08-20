@@ -1,25 +1,38 @@
-import 'package:flitter/components/rounded_button.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flitter/services/auth_services.dart';
 import 'package:flitter/screens/posts/add_post_screen.dart';
 import 'package:flitter/screens/profile/profile.dart';
+import 'package:flitter/screens/posts/feed_screen.dart';
+import 'package:flitter/screens/search.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   static String id = 'home_screen';
   @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  final AuthService _authService = AuthService();
+  int _currentIndex = 0;
+  final List<Widget> _children = [
+    FeedScreen(),
+    Search(),
+  ];
+
+  void onTabPressed(int index) {
+    setState(
+      () {
+        _currentIndex = index;
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final AuthService _authService = AuthService();
     return Scaffold(
       appBar: AppBar(
         title: Text("Home"),
-        // actions: <Widget>[
-        //   RoundedButton(
-        //     title: "Sign Out",
-        //     onPressed: () async {
-        //       _authService.signOut();
-        //     },
-        //   )
-        // ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -32,12 +45,18 @@ class Home extends StatelessWidget {
           children: <Widget>[
             DrawerHeader(
               child: Text('drawer header'),
-              decoration: BoxDecoration(color: Colors.blue),
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
             ),
             ListTile(
               title: Text('Profile'),
               onTap: () {
-                Navigator.pushNamed(context, Profile.id);
+                Navigator.pushNamed(
+                  context,
+                  Profile.id,
+                  arguments: FirebaseAuth.instance.currentUser!.uid,
+                );
               },
             ),
             ListTile(
@@ -49,6 +68,23 @@ class Home extends StatelessWidget {
           ],
         ),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: onTabPressed,
+        currentIndex: _currentIndex,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        items: [
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.home),
+            label: 'home',
+          ),
+          BottomNavigationBarItem(
+            icon: new Icon(Icons.search),
+            label: 'search',
+          ),
+        ],
+      ),
+      body: _children[_currentIndex],
     );
   }
 }

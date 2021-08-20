@@ -21,13 +21,12 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    final uid = ModalRoute.of(context)!.settings.arguments! as String;
     return MultiProvider(
       providers: [
         StreamProvider<List<PostModel>?>.value(
           initialData: [],
-          // catchError: (_, err) => print(err),
-          value: _postService
-              .getPostsByUser(FirebaseAuth.instance.currentUser!.uid),
+          value: _postService.getPostsByUser(uid),
         ),
         StreamProvider<UserModel?>.value(
           // catchError: (_, err) => print(err),
@@ -38,8 +37,7 @@ class _ProfileState extends State<Profile> {
             bannerImageUrl: '',
             email: '',
           ),
-          value:
-              _userService.getUserInfo(FirebaseAuth.instance.currentUser!.uid),
+          value: _userService.getUserInfo(uid),
         ),
       ],
       child: Scaffold(
@@ -74,16 +72,21 @@ class _ProfileState extends State<Profile> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Image.network(
+
                                     Provider.of<UserModel?>(context)!
-                                            .profileImageUrl ??
-                                        '',
-                                    height: 60,
-                                    fit: BoxFit.cover,
-                                    errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-                                      return Text('Your error widget...');
-                                    },
-                                  ),
+                                        .profileImageUrl !=
+                                        ''
+                                        ? CircleAvatar(
+                                      radius: 30,
+                                      backgroundImage: NetworkImage(
+                                          '${Provider.of<UserModel?>(context)!
+                                              .profileImageUrl}',),
+                                    )
+                                        : Icon(Icons.person, size: 50,),
+                                    // errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                                    //   return Text('Your error widget...');
+                                    // },
+
                                   TextButton(
                                     onPressed: () {
                                       Navigator.pushNamed(context, EditProfile.id);

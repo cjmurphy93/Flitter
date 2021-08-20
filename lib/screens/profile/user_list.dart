@@ -12,7 +12,7 @@ class UsersList extends StatefulWidget {
 class _UsersListState extends State<UsersList> {
   @override
   Widget build(BuildContext context) {
-    final users = Provider.of<List<UserModel>>(context) ?? [];
+    final users = Provider.of<List<UserModel>?>(context) ?? [];
 
     return ListView.builder(
       shrinkWrap: true,
