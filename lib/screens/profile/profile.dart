@@ -24,6 +24,11 @@ class _ProfileState extends State<Profile> {
     final uid = ModalRoute.of(context)!.settings.arguments! as String;
     return MultiProvider(
       providers: [
+        StreamProvider<bool>.value(
+          initialData: false,
+          value: _userService.isFollowing(
+              FirebaseAuth.instance.currentUser!.uid, uid),
+        ),
         StreamProvider<List<PostModel>?>.value(
           initialData: [],
           value: _postService.getPostsByUser(uid),
@@ -54,7 +59,8 @@ class _ProfileState extends State<Profile> {
                     background: Image.network(
                       Provider.of<UserModel?>(context)!.bannerImageUrl ?? '',
                       fit: BoxFit.cover,
-                      errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                      errorBuilder: (BuildContext context, Object exception,
+                          StackTrace? stackTrace) {
                         return Text('Your error widget...');
                       },
                     ),
@@ -72,27 +78,52 @@ class _ProfileState extends State<Profile> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
+                                  Provider.of<UserModel?>(context)!
+                                              .profileImageUrl !=
+                                          ''
+                                      ? CircleAvatar(
+                                          radius: 30,
+                                          backgroundImage: NetworkImage(
+                                            '${Provider.of<UserModel?>(context)!.profileImageUrl}',
+                                          ),
+                                        )
+                                      : Icon(
+                                          Icons.person,
+                                          size: 50,
+                                        ),
+                                  // errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                                  //   return Text('Your error widget...');
+                                  // },
 
-                                    Provider.of<UserModel?>(context)!
-                                        .profileImageUrl !=
-                                        ''
-                                        ? CircleAvatar(
-                                      radius: 30,
-                                      backgroundImage: NetworkImage(
-                                          '${Provider.of<UserModel?>(context)!
-                                              .profileImageUrl}',),
+                                  if (FirebaseAuth.instance.currentUser!.uid ==
+                                      uid)
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pushNamed(
+                                            context, EditProfile.id);
+                                      },
+                                      child: Text("Edit Profile"),
                                     )
-                                        : Icon(Icons.person, size: 50,),
-                                    // errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-                                    //   return Text('Your error widget...');
-                                    // },
-
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pushNamed(context, EditProfile.id);
-                                    },
-                                    child: Text("Edit Profile"),
-                                  )
+                                  else if (FirebaseAuth
+                                              .instance.currentUser!.uid !=
+                                          uid &&
+                                      !Provider.of<bool>(context))
+                                    TextButton(
+                                      onPressed: () {
+                                        _userService.followUser(uid);
+                                      },
+                                      child: Text("Follow"),
+                                    )
+                                  else if (FirebaseAuth
+                                              .instance.currentUser!.uid !=
+                                          uid &&
+                                      Provider.of<bool>(context))
+                                    TextButton(
+                                      onPressed: () {
+                                        _userService.unfollowUser(uid);
+                                      },
+                                      child: Text("Unfollow"),
+                                    ),
                                 ]),
                             Align(
                               alignment: Alignment.centerLeft,
