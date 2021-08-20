@@ -1,10 +1,13 @@
-import 'dart:io';
+import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flitter/models/post.dart';
+import 'package:flitter/services/user_services.dart';
+import 'package:quiver/iterables.dart';
 
 class PostService {
-  List<PostModel>? _postListFromSnapshot(QuerySnapshot<Map<String, dynamic>> snapshot) {
+  List<PostModel>? _postListFromSnapshot(
+      QuerySnapshot<Map<String, dynamic>> snapshot) {
     return snapshot.docs.map((doc) {
       return PostModel(
         id: doc.id,
@@ -78,4 +81,33 @@ class PostService {
   //       // .map(_postListFromSnapshot);
   // }
 
+  Future<List<PostModel>?> getFeed() async {
+    List<String> usersFollowing = await UserService()
+        .getUserFollowing(FirebaseAuth.instance.currentUser!.uid);
+
+    var splitUsersFollowing = partition<dynamic>(usersFollowing, 10);
+    inspect(splitUsersFollowing);
+
+    List<PostModel>? feedList = [];
+
+    for (int i = 0; i < splitUsersFollowing.length; i++) {
+      inspect(splitUsersFollowing.elementAt(i));
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await FirebaseFirestore.instance
+              .collection('posts')
+              .where('creator', whereIn: splitUsersFollowing.elementAt(i))
+              .orderBy('timestamp', descending: true)
+              .get();
+
+      feedList.addAll(_postListFromSnapshot(querySnapshot)!);
+    }
+
+    feedList.sort((a, b) {
+      var aDate = a.timestamp;
+      var bDate = b.timestamp;
+      return bDate.compareTo(aDate);
+    });
+
+    return feedList;
+  }
 }

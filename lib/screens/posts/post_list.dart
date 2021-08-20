@@ -13,7 +13,6 @@ class _PostsListState extends State<PostsList> {
     // final posts = Provider.of<List<PostModel>>(context);
     final posts = Provider.of<List<PostModel>?>(context) ?? [];
     return ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
       itemCount: posts.length,
       itemBuilder: (context, index) {
         final post = posts[index];
