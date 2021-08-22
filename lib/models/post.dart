@@ -8,7 +8,7 @@ class PostModel {
   final bool? retweet;
   final String? originalId;
   DocumentReference? ref;
-  int? numLikes;
+  int numLikes;
   int? numRetweets;
 
   PostModel({
@@ -17,7 +17,7 @@ class PostModel {
     required this.text,
     required this.timestamp,
     this.retweet,
-    this.numLikes,
+    required this.numLikes,
     this.numRetweets,
     this.originalId,
     this.ref,

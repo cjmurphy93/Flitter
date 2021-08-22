@@ -110,4 +110,41 @@ class PostService {
 
     return feedList;
   }
+
+  Future likePost(PostModel post, bool current) async {
+    print(post.id);
+    if (current) {
+      post.numLikes = post.numLikes - 1;
+      await FirebaseFirestore.instance
+          .collection("posts")
+          .doc(post.id)
+          .collection("likes")
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .delete();
+    }
+    if (!current) {
+      post.numLikes = post.numLikes + 1;
+
+      await FirebaseFirestore.instance
+          .collection("posts")
+          .doc(post.id)
+          .collection("likes")
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .set({});
+    }
+  }
+
+  Stream<bool> getCurrentUserLike(PostModel post) {
+    return FirebaseFirestore.instance
+        .collection("posts")
+        .doc(post.id)
+        .collection("likes")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .snapshots()
+        .map(
+      (snapshot) {
+        return snapshot.exists;
+      },
+    );
+  }
 }
