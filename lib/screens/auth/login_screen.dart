@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flitter/services/auth_services.dart';
 import 'package:flitter/components/rounded_button.dart';
 import 'package:loading_overlay/loading_overlay.dart';
-import 'package:flitter/screens/posts/feed_screen.dart';
 import 'package:flitter/constants.dart';
 import 'package:flitter/screens/home.dart';
 
@@ -76,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: () async {
                   setState(() {
                     showSpinner = true;
-                  });
+                  },);
                   try {
                     _auth.signIn(
                       email,
@@ -84,14 +83,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     );
                     Navigator.pushNamed(
                       context,
-                      '/',
+                      Home.id,
                     );
                   } catch (e) {
                     print(e);
                   } finally {
                     setState(() {
                       showSpinner = false;
-                    });
+                    },);
                   }
                 },
                 color: Colors.lightBlueAccent,

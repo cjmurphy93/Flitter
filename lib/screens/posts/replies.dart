@@ -22,48 +22,57 @@ class _RepliesState extends State<Replies> {
     PostModel args = ModalRoute.of(context)!.settings.arguments as PostModel;
     return FutureProvider<List<PostModel>?>.value(
       initialData: [],
-        value: _postService.getReplies(args),
-        child: Container(
-          child: Scaffold(
-            body: Container(
-              child: Column(
-                children: [
-                  Expanded(child: PostsList(args)),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Form(
-                            child: TextFormField(
-                              controller: _textController,
-                              onChanged: (val) {
-                                setState(() {
-                                  text = val;
-                                });
+      value: _postService.getReplies(args),
+      child: Container(
+        child: Scaffold(
+          body: Container(
+            child: Column(
+              children: [
+                Expanded(
+                  child: PostsList(args),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Form(
+                        child: TextFormField(
+                          controller: _textController,
+                          onChanged: (val) {
+                            setState(
+                              () {
+                                text = val;
                               },
-                            )),
-                        SizedBox(
-                          height: 10,
+                            );
+                          },
                         ),
-                        TextButton(
-
-                            style: TextButton.styleFrom(primary: Colors.white, backgroundColor: Colors.blue,),
-                            onPressed: () async {
-                              await _postService.reply(args, text);
-                              _textController.text = '';
-                              setState(() {
-                                text = '';
-                              });
+                      ),
+                      SizedBox(height: 10),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          primary: Colors.white,
+                          backgroundColor: Colors.blue,
+                        ),
+                        onPressed: () async {
+                          await _postService.reply(args, text);
+                          _textController.text = '';
+                          setState(
+                            () {
+                              text = '';
                             },
-                            child: Text("Reply"),)
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                          );
+                        },
+                        child: Text("Reply"),
+                      )
+                    ],
+                  ),
+                )
+              ],
             ),
           ),
-        ),);
+        ),
+      ),
+    );
   }
 }

@@ -34,7 +34,7 @@ class Wrapper extends StatelessWidget {
     return MaterialApp(
       title: 'Flitter',
       home: Home(),
-      initialRoute: '/',
+      initialRoute: Home.id,
       routes: {
         FeedScreen.id: (context) => FeedScreen(),
         AddPost.id: (context) => AddPost(),
