@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flitter/models/post.dart';
 import 'package:flitter/models/user.dart';
 import 'package:flitter/services/post_services.dart';
+import 'package:flitter/screens/posts/replies.dart';
 
 class PostItem extends StatefulWidget {
   final PostModel post;
@@ -10,13 +11,10 @@ class PostItem extends StatefulWidget {
   final AsyncSnapshot<bool> snapshotRetweet;
   final bool retweet;
 
-  PostItem(
-    this.post,
-    this.snapshotUser,
-    this.snapshotLike,
-    this.snapshotRetweet,
-    this.retweet,
-  );
+  PostItem(this.post, this.snapshotUser, this.snapshotLike,
+      this.snapshotRetweet, this.retweet,
+      {Key? key})
+      : super(key: key);
 
   @override
   _PostItemState createState() => _PostItemState();
@@ -32,8 +30,7 @@ class _PostItemState extends State<PostItem> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (widget.snapshotRetweet.data != false || widget.retweet)
-              Text("Retweet"),
+            if (widget.snapshotRetweet.data! || widget.retweet) Text("Retweet"),
             SizedBox(height: 20),
             Row(
               children: [
@@ -41,7 +38,7 @@ class _PostItemState extends State<PostItem> {
                     ? CircleAvatar(
                         radius: 20,
                         backgroundImage: NetworkImage(
-                          widget.snapshotUser.data!.profileImageUrl.toString(),
+                          widget.snapshotUser.data!.profileImageUrl!,
                         ),
                       )
                     : Icon(
@@ -49,7 +46,7 @@ class _PostItemState extends State<PostItem> {
                         size: 40,
                       ),
                 SizedBox(width: 10),
-                Text(widget.snapshotUser.data!.name.toString())
+                Text(widget.snapshotUser.data!.name!)
               ],
             ),
           ],
@@ -63,9 +60,9 @@ class _PostItemState extends State<PostItem> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(widget.post.text),
+                Text(widget.post.text!),
                 SizedBox(height: 20),
-                Text(widget.post.timestamp.toDate().toString()),
+                Text(widget.post.timestamp!.toDate().toString()),
                 SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -74,7 +71,23 @@ class _PostItemState extends State<PostItem> {
                       children: [
                         IconButton(
                           icon: new Icon(
-                            widget.snapshotRetweet.data != false
+                            Icons.chat_bubble_outline,
+                            color: Colors.blue,
+                            size: 30.0,
+                          ),
+                          onPressed: () => Navigator.pushNamed(
+                            context,
+                            Replies.id,
+                            arguments: widget.post,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: new Icon(
+                            widget.snapshotRetweet.data!
                                 ? Icons.cancel
                                 : Icons.repeat,
                             color: Colors.blue,
@@ -84,7 +97,6 @@ class _PostItemState extends State<PostItem> {
                             widget.post,
                             widget.snapshotRetweet.data!,
                           ),
-
                         ),
                         Text(widget.post.numRetweets.toString())
                       ],
@@ -93,7 +105,7 @@ class _PostItemState extends State<PostItem> {
                       children: [
                         IconButton(
                           icon: new Icon(
-                            widget.snapshotLike.data != false
+                            widget.snapshotLike.data!
                                 ? Icons.favorite
                                 : Icons.favorite_border,
                             color: Colors.blue,

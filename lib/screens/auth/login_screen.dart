@@ -9,6 +9,7 @@ import 'package:flitter/screens/home.dart';
 class LoginScreen extends StatefulWidget {
   static String id = 'login_screen';
 
+  LoginScreen({Key? key}) : super(key: key);
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -16,8 +17,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final AuthService _auth = AuthService();
   bool showSpinner = false;
-  String? email;
-  String? password;
+  late String email;
+  late String password;
 
   @override
   Widget build(BuildContext context) {

@@ -19,7 +19,7 @@ class _FeedScreenState extends State<FeedScreen> {
       initialData: [],
       value: _postService.getFeed(),
       child: Scaffold(
-        body: PostsList(),
+        body: PostsList(null),
       ),
     );
   }

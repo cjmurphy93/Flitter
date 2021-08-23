@@ -14,8 +14,8 @@ class UserService {
         ? UserModel(
             id: snapshot.id,
             name: snapshot['name'],
-            profileImageUrl: snapshot.data()?['profileImageUrl'] ?? '',
-            bannerImageUrl: snapshot.data()?['bannerImageUrl'] ?? '',
+            profileImageUrl: snapshot.data()!['profileImageUrl'] ?? '',
+            bannerImageUrl: snapshot.data()!['bannerImageUrl'] ?? '',
             email: snapshot['email'],
           )
         : null;

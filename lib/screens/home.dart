@@ -8,6 +8,7 @@ import 'package:flitter/screens/search.dart';
 
 class Home extends StatefulWidget {
   static String id = 'home_screen';
+  Home({Key? key}) : super(key: key);
   @override
   _HomeState createState() => _HomeState();
 }

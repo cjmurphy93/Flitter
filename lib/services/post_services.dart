@@ -6,18 +6,18 @@ import 'package:flitter/services/user_services.dart';
 import 'package:quiver/iterables.dart';
 
 class PostService {
-  List<PostModel>? _postListFromSnapshot(
+  List<PostModel> _postListFromSnapshot(
       QuerySnapshot<Map<String, dynamic>> snapshot) {
     return snapshot.docs.map((doc) {
       return PostModel(
         id: doc.id,
         text: doc.data()['text'] ?? '',
-        creator: doc.get('creator') ?? '',
-        retweet: doc.get('retweet') ?? false,
+        creator: doc.data()['creator'] ?? '',
+        retweet: doc.data()['retweet'] ?? false,
         numLikes: doc.data()['numLikes'] ?? 0,
         numRetweets: doc.data()['numRetweets'] ?? 0,
         originalId: doc.data()['originalId'] ?? null,
-        timestamp: doc.data()['timestamp'] ?? 0,
+        timestamp: doc.data()['timestamp'] ?? 0 as Timestamp?,
         ref: doc.reference,
       );
     }).toList();
@@ -30,10 +30,10 @@ class PostService {
             text: snapshot['text'] ?? '',
             creator: snapshot['creator'] ?? '',
             retweet: snapshot['retweet'] ?? false,
-            numLikes: snapshot.data()?['numLikes'] ?? 0,
-            numRetweets: snapshot.data()?['numRetweets'] ?? 0,
-            originalId: snapshot.data()?['originalId'] ?? null,
-            timestamp: snapshot['timestamp'] ?? 0,
+            numLikes: snapshot.data()!['numLikes'] ?? 0,
+            numRetweets: snapshot.data()!['numRetweets'] ?? 0,
+            originalId: snapshot.data()!['originalId'] ?? null,
+            timestamp: snapshot['timestamp'] ?? 0 as Timestamp?,
             ref: snapshot.reference,
           )
         : null;
@@ -65,7 +65,17 @@ class PostService {
     );
   }
 
-  Stream<List<PostModel>?> getPostsByUser(uid) {
+  Future<List<PostModel>> getReplies(PostModel post) async {
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await post.ref!
+        .collection("replies")
+        .orderBy('timestamp', descending: true)
+        .get();
+
+    return _postListFromSnapshot(querySnapshot);
+  }
+
+
+  Stream<List<PostModel>> getPostsByUser(uid) {
     return FirebaseFirestore.instance
         .collection("posts")
         .where('creator', isEqualTo: uid)
@@ -73,22 +83,15 @@ class PostService {
         .map(_postListFromSnapshot);
   }
 
-  // Stream<QuerySnapshot<Map<String, dynamic>>> getPostsByUser(uid) {
-  //   return FirebaseFirestore.instance
-  //       .collection("posts")
-  //       .where('creator', isEqualTo: uid)
-  //       .snapshots();
-  //       // .map(_postListFromSnapshot);
-  // }
 
-  Future<List<PostModel>?> getFeed() async {
+  Future<List<PostModel>> getFeed() async {
     List<String> usersFollowing = await UserService()
         .getUserFollowing(FirebaseAuth.instance.currentUser!.uid);
 
     var splitUsersFollowing = partition<dynamic>(usersFollowing, 10);
     inspect(splitUsersFollowing);
 
-    List<PostModel>? feedList = [];
+    List<PostModel> feedList = [];
 
     for (int i = 0; i < splitUsersFollowing.length; i++) {
       inspect(splitUsersFollowing.elementAt(i));
@@ -99,12 +102,12 @@ class PostService {
               .orderBy('timestamp', descending: true)
               .get();
 
-      feedList.addAll(_postListFromSnapshot(querySnapshot)!);
+      feedList.addAll(_postListFromSnapshot(querySnapshot));
     }
 
     feedList.sort((a, b) {
-      var aDate = a.timestamp;
-      var bDate = b.timestamp;
+      var aDate = a.timestamp!;
+      var bDate = b.timestamp!;
       return bDate.compareTo(aDate);
     });
 
@@ -113,7 +116,7 @@ class PostService {
 
   Future likePost(PostModel post, bool current) async {
     if (current) {
-      post.numLikes = post.numLikes - 1;
+      post.numLikes = post.numLikes! - 1;
       await FirebaseFirestore.instance
           .collection("posts")
           .doc(post.id)
@@ -122,7 +125,7 @@ class PostService {
           .delete();
     }
     if (!current) {
-      post.numLikes = post.numLikes + 1;
+      post.numLikes = post.numLikes! + 1;
 
       await FirebaseFirestore.instance
           .collection("posts")
@@ -149,7 +152,7 @@ class PostService {
 
   Future retweet(PostModel post, bool current) async {
     if (current) {
-      post.numRetweets = post.numRetweets - 1;
+      post.numRetweets = post.numRetweets! - 1;
       await FirebaseFirestore.instance
           .collection("posts")
           .doc(post.id)
@@ -175,7 +178,7 @@ class PostService {
       );
       return;
     }
-    post.numRetweets = post.numRetweets + 1;
+    post.numRetweets = post.numRetweets! + 1;
     await FirebaseFirestore.instance
         .collection("posts")
         .doc(post.id)

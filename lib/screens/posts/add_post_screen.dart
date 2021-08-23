@@ -4,6 +4,7 @@ import 'package:flitter/components/rounded_button.dart';
 
 class AddPost extends StatefulWidget {
   static String id = 'add_post_screen';
+  AddPost({Key? key}) : super(key: key);
 
   @override
   _AddPostState createState() => _AddPostState();

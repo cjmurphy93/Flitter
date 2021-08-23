@@ -8,9 +8,11 @@ import 'package:flitter/screens/posts/feed_screen.dart';
 import 'package:flitter/screens/posts/add_post_screen.dart';
 import 'package:flitter/screens/profile/profile.dart';
 import 'package:flitter/screens/profile/edit_profile.dart';
+import 'package:flitter/screens/posts/replies.dart';
 import 'package:flitter/models/user.dart';
 
 class Wrapper extends StatelessWidget {
+  const Wrapper({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserModel?>(context);
@@ -41,6 +43,7 @@ class Wrapper extends StatelessWidget {
         WelcomeScreen.id: (context) => WelcomeScreen(),
         LoginScreen.id: (context) => LoginScreen(),
         RegistrationScreen.id: (context) => RegistrationScreen(),
+        Replies.id: (context) => Replies(),
       },
     );
   }

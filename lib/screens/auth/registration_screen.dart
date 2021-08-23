@@ -7,7 +7,7 @@ import 'package:flitter/screens/posts/feed_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static String id = 'registration_screen';
-
+  RegistrationScreen({Key? key}) : super(key: key);
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
 }
@@ -15,8 +15,8 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final AuthService _auth = AuthService();
   bool showSpinner = false;
-  String? email;
-  String? password;
+  late String email;
+  late String password;
 
   @override
   Widget build(BuildContext context) {

@@ -7,6 +7,8 @@ import 'package:flitter/services/user_services.dart';
 import 'package:flitter/services/post_services.dart';
 
 class PostsList extends StatefulWidget {
+  final PostModel? post;
+  PostsList(this.post, {Key? key}) : super(key: key);
   @override
   _PostsListState createState() => _PostsListState();
 }
@@ -16,13 +18,15 @@ class _PostsListState extends State<PostsList> {
   PostService _postService = PostService();
   @override
   Widget build(BuildContext context) {
-    // final posts = Provider.of<List<PostModel>>(context);
-    final posts = Provider.of<List<PostModel>?>(context) ?? [];
+    List<PostModel>? posts = Provider.of<List<PostModel>?>(context) ?? [];
+    if (widget.post != null) {
+      posts.insert(0, widget.post!);
+    }
     return ListView.builder(
       itemCount: posts.length,
       itemBuilder: (context, index) {
         final post = posts[index];
-        if (post.retweet) {
+        if (post.retweet!) {
           return FutureBuilder(
             future: _postService.getPostById(post.originalId.toString()),
             builder: (
@@ -81,7 +85,7 @@ class _PostsListState extends State<PostsList> {
                 BuildContext context,
                 AsyncSnapshot<bool> snapshotRetweet,
               ) {
-                if (!snapshotLike.hasData) {
+                if (!snapshotRetweet.hasData) {
                   return Center(
                     child: CircularProgressIndicator(),
                   );

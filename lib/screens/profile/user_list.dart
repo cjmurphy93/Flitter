@@ -5,6 +5,7 @@ import 'package:flitter/models/user.dart';
 import 'package:flitter/screens/profile/profile.dart';
 
 class UsersList extends StatefulWidget {
+  UsersList({Key? key}) : super(key: key);
   @override
   _UsersListState createState() => _UsersListState();
 }
@@ -35,7 +36,7 @@ class _UsersListState extends State<UsersList> {
                         ? CircleAvatar(
                             radius: 20,
                             backgroundImage: NetworkImage(
-                              user.profileImageUrl.toString(),
+                              user.profileImageUrl!,
                             ),
                           )
                         : Icon(
@@ -43,7 +44,7 @@ class _UsersListState extends State<UsersList> {
                             size: 40,
                           ),
                     SizedBox(width: 10),
-                    Text(user.name.toString()),
+                    Text(user.name!),
                   ],
                 ),
               ),

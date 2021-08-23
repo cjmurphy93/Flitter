@@ -10,6 +10,7 @@ import 'package:flitter/models/user.dart';
 
 class Profile extends StatefulWidget {
   static String id = 'profile_screen';
+  Profile({Key? key}) : super(key: key);
 
   @override
   _ProfileState createState() => _ProfileState();
@@ -21,7 +22,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    final uid = ModalRoute.of(context)!.settings.arguments! as String;
+    final uid = ModalRoute.of(context)!.settings.arguments;
     return MultiProvider(
       providers: [
         StreamProvider<bool>.value(
@@ -30,7 +31,7 @@ class _ProfileState extends State<Profile> {
               FirebaseAuth.instance.currentUser!.uid, uid),
 
         ),
-        StreamProvider<List<PostModel>?>.value(
+        StreamProvider<List<PostModel>>.value(
           initialData: [],
           value: _postService.getPostsByUser(uid),
           // catchError: (_, err) => err,
@@ -59,7 +60,7 @@ class _ProfileState extends State<Profile> {
                   expandedHeight: 130,
                   flexibleSpace: FlexibleSpaceBar(
                     background: Image.network(
-                      Provider.of<UserModel?>(context)!.bannerImageUrl ?? '',
+                      Provider.of<UserModel>(context).bannerImageUrl ?? '',
                       fit: BoxFit.cover,
                       errorBuilder: (BuildContext context, Object exception,
                           StackTrace? stackTrace) {
@@ -80,13 +81,13 @@ class _ProfileState extends State<Profile> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Provider.of<UserModel?>(context)!
+                                  Provider.of<UserModel>(context)
                                               .profileImageUrl !=
                                           ''
                                       ? CircleAvatar(
                                           radius: 30,
                                           backgroundImage: NetworkImage(
-                                            '${Provider.of<UserModel?>(context)!.profileImageUrl}',
+                                            Provider.of<UserModel>(context).profileImageUrl!,
                                           ),
                                         )
                                       : Icon(
@@ -132,7 +133,7 @@ class _ProfileState extends State<Profile> {
                               child: Container(
                                 padding: EdgeInsets.symmetric(vertical: 10),
                                 child: Text(
-                                  Provider.of<UserModel?>(context)!.name ?? '',
+                                  Provider.of<UserModel>(context).name ?? '',
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20,
@@ -148,7 +149,7 @@ class _ProfileState extends State<Profile> {
                 ),
               ];
             },
-            body: PostsList(),
+            body: PostsList(null),
           ),
         ),
       ),

@@ -5,6 +5,7 @@ import 'package:flitter/services/user_services.dart';
 
 class EditProfile extends StatefulWidget {
   static String id = 'edit_profile_screen';
+  EditProfile({Key? key}) : super(key: key);
 
   @override
   _EditProfileState createState() => _EditProfileState();
