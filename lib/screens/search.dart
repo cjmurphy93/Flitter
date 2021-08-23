@@ -14,7 +14,7 @@ class _SearchState extends State<Search> {
   String search = '';
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<List<UserModel>>.value(
+    return StreamProvider<List<UserModel>?>.value(
       initialData: [],
       value: _userService.queryByName(search),
       child: Column(

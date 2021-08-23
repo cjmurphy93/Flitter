@@ -65,7 +65,7 @@ class PostService {
     );
   }
 
-  Future<List<PostModel>> getReplies(PostModel post) async {
+  Future<List<PostModel>?> getReplies(PostModel post) async {
     QuerySnapshot<Map<String, dynamic>> querySnapshot = await post.ref!
         .collection("replies")
         .orderBy('timestamp', descending: true)
@@ -75,7 +75,7 @@ class PostService {
   }
 
 
-  Stream<List<PostModel>> getPostsByUser(uid) {
+  Stream<List<PostModel>?> getPostsByUser(uid) {
     return FirebaseFirestore.instance
         .collection("posts")
         .where('creator', isEqualTo: uid)
@@ -84,7 +84,7 @@ class PostService {
   }
 
 
-  Future<List<PostModel>> getFeed() async {
+  Future<List<PostModel>?> getFeed() async {
     List<String> usersFollowing = await UserService()
         .getUserFollowing(FirebaseAuth.instance.currentUser!.uid);
 

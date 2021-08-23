@@ -82,7 +82,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     );
                     Navigator.pushNamed(
                       context,
-                      Home.id,
+                      '/',
                     );
                   } catch (e) {
                     print(e);

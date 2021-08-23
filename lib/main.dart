@@ -33,6 +33,7 @@ class Flitter extends StatelessWidget {
               email: '',
             ),
             child: MaterialApp(
+              debugShowCheckedModeBanner: false,
               home: Wrapper(),
             ),
           );
