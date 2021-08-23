@@ -20,8 +20,11 @@ class _UsersListState extends State<UsersList> {
       itemBuilder: (context, index) {
         final user = users[index];
         return InkWell(
-          onTap: () =>
-              Navigator.pushNamed(context, Profile.id, arguments: user.id),
+          onTap: () => Navigator.pushNamed(
+            context,
+            Profile.id,
+            arguments: user.id,
+          ),
           child: Column(
             children: [
               Padding(
@@ -32,7 +35,7 @@ class _UsersListState extends State<UsersList> {
                         ? CircleAvatar(
                             radius: 20,
                             backgroundImage: NetworkImage(
-                              '${user.profileImageUrl}',
+                              user.profileImageUrl.toString(),
                             ),
                           )
                         : Icon(
@@ -40,7 +43,7 @@ class _UsersListState extends State<UsersList> {
                             size: 40,
                           ),
                     SizedBox(width: 10),
-                    Text('${user.name}'),
+                    Text(user.name.toString()),
                   ],
                 ),
               ),
