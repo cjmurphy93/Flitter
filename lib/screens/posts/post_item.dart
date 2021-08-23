@@ -93,7 +93,7 @@ class _PostItemState extends State<PostItem> {
                       children: [
                         IconButton(
                           icon: new Icon(
-                            widget.snapshotLike.data != null
+                            widget.snapshotLike.data != false
                                 ? Icons.favorite
                                 : Icons.favorite_border,
                             color: Colors.blue,

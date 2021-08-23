@@ -123,7 +123,7 @@ class UserService {
   }
 
   Future<List<String>> getUserFollowing(uid) async {
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore.instance
         .collection('users')
         .doc(uid)
         .collection('following')

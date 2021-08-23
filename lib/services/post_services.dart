@@ -112,7 +112,6 @@ class PostService {
   }
 
   Future likePost(PostModel post, bool current) async {
-    print(post.id);
     if (current) {
       post.numLikes = post.numLikes - 1;
       await FirebaseFirestore.instance
