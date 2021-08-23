@@ -5,20 +5,20 @@ class PostModel {
   final String creator;
   final String text;
   final Timestamp timestamp;
-  final bool? retweet;
+  final bool retweet;
   final String? originalId;
   DocumentReference? ref;
   int numLikes;
-  int? numRetweets;
+  int numRetweets;
 
   PostModel({
     required this.id,
     required this.creator,
     required this.text,
     required this.timestamp,
-    this.retweet,
+    required this.retweet,
     required this.numLikes,
-    this.numRetweets,
+    required this.numRetweets,
     this.originalId,
     this.ref,
   });

@@ -28,10 +28,12 @@ class _ProfileState extends State<Profile> {
           initialData: false,
           value: _userService.isFollowing(
               FirebaseAuth.instance.currentUser!.uid, uid),
+
         ),
         StreamProvider<List<PostModel>?>.value(
           initialData: [],
           value: _postService.getPostsByUser(uid),
+          // catchError: (_, err) => err,
         ),
         StreamProvider<UserModel?>.value(
           // catchError: (_, err) => print(err),
