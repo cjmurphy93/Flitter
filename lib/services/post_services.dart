@@ -91,7 +91,7 @@ class PostService {
     var splitUsersFollowing = partition<dynamic>(usersFollowing, 10);
     inspect(splitUsersFollowing);
 
-    List<PostModel> feedList = [];
+    List<PostModel>? feedList = [];
 
     for (int i = 0; i < splitUsersFollowing.length; i++) {
       inspect(splitUsersFollowing.elementAt(i));
