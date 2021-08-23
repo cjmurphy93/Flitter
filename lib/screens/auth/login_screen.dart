@@ -83,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     );
                     Navigator.pushNamed(
                       context,
-                      Home.id,
+                      '/',
                     );
                   } catch (e) {
                     print(e);

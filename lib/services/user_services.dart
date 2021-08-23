@@ -54,7 +54,7 @@ class UserService {
         .update(data);
   }
 
-  List<UserModel> _userListFromQuerySnapshot(
+  List<UserModel>? _userListFromQuerySnapshot(
       QuerySnapshot<Map<String, dynamic>> snapshot) {
     return snapshot.docs.map((doc) {
       return UserModel(
@@ -67,7 +67,7 @@ class UserService {
     }).toList();
   }
 
-  Stream<List<UserModel>> queryByName(search) {
+  Stream<List<UserModel>?> queryByName(search) {
     return FirebaseFirestore.instance
         .collection("users")
         .orderBy("name")
