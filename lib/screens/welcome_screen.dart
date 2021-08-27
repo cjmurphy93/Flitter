@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'auth/login_screen.dart';
 import 'auth/registration_screen.dart';
 import 'package:flitter/components/rounded_button.dart';
+import 'package:flitter/services/auth_services.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static String id = 'welcome_screen';
@@ -39,7 +40,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   //   controller.dispose();
   //   super.dispose();
   // }
-
+  final AuthService _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,13 +53,20 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           children: <Widget>[
             Row(
               children: <Widget>[
-                // Hero(
-                //   tag: 'logo',
-                //   child: Container(
-                //     child: Image.asset('images/logo.png'),
-                //     height: 60.0,
-                //   ),
-                // ),
+                Hero(
+                  tag: 'logo',
+                  child: Container(
+                    child: Image.asset('images/logo.png'),
+                    height: 60.0,
+                  ),
+                ),
+                Text(
+                  'Flitter',
+                  style: TextStyle(
+                    fontSize: 45.0,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
                 // AnimatedTextKit(
                 //   animatedTexts: [
                 //     TypewriterAnimatedText(
@@ -99,6 +107,31 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 );
               },
               title: 'Register',
+            ),
+            RoundedButton(
+              title: 'Demo User',
+              onPressed: () async {
+                // setState(() {
+                //   showSpinner = true;
+                // },);
+                try {
+                  _auth.signIn(
+                    'demo@user.com',
+                    'password123',
+                  );
+                  Navigator.pushNamed(
+                    context,
+                    '/',
+                  );
+                } catch (e) {
+                  print(e);
+                } finally {
+                  // setState(() {
+                  //   showSpinner = false;
+                  // },);
+                }
+              },
+              color: Colors.lightBlueAccent,
             ),
           ],
         ),
