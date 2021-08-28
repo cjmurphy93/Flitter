@@ -39,7 +39,13 @@ class _HomeState extends State<Home> {
         onPressed: () {
           Navigator.pushNamed(context, AddPost.id);
         },
-        child: Icon(Icons.add),
+        child: Icon(
+          Icons.edit,
+          // IconData(
+          //   0xf029,
+          //   // fontFamily: 'TwitterIcon',
+          // ),
+        ),
       ),
       drawer: Drawer(
         child: ListView(

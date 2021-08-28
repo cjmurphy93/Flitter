@@ -3,6 +3,7 @@ import 'package:flitter/models/post.dart';
 import 'package:flitter/models/user.dart';
 import 'package:flitter/services/post_services.dart';
 import 'package:flitter/screens/posts/replies.dart';
+import 'package:flitter/services/utils.dart';
 
 class PostItem extends StatefulWidget {
   final PostModel post;
@@ -22,113 +23,278 @@ class PostItem extends StatefulWidget {
 
 class _PostItemState extends State<PostItem> {
   PostService _postService = PostService();
+  // UtilsService _util = UtilsService();
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Padding(
-        padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (widget.snapshotRetweet.data! || widget.retweet) Text("Retweet"),
-            SizedBox(height: 20),
-            Row(
-              children: [
-                widget.snapshotUser.data!.profileImageUrl != ''
-                    ? CircleAvatar(
-                        radius: 20,
-                        backgroundImage: NetworkImage(
-                          widget.snapshotUser.data!.profileImageUrl!,
-                        ),
-                      )
-                    : Icon(
-                        Icons.person,
-                        size: 40,
-                      ),
-                SizedBox(width: 10),
-                Text(widget.snapshotUser.data!.name!)
-              ],
-            ),
-          ],
-        ),
-      ),
-      subtitle: Column(
+    return Container(
+      color: Colors.white,
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+          Container(
+            margin: const EdgeInsets.all(10.0),
+            child: widget.snapshotUser.data!.profileImageUrl != ''
+                ? CircleAvatar(
+                    radius: 20,
+                    backgroundImage: NetworkImage(
+                      widget.snapshotUser.data!.profileImageUrl!,
+                    ),
+                  )
+                : Icon(
+                    Icons.person,
+                    size: 40,
+                  ),
+          ),
+          Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(widget.post.text!),
-                SizedBox(height: 20),
-                Text(widget.post.timestamp!.toDate().toString()),
-                SizedBox(height: 20),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Row(
-                      children: [
-                        IconButton(
-                          icon: new Icon(
-                            Icons.chat_bubble_outline,
-                            color: Colors.blue,
-                            size: 30.0,
-                          ),
-                          onPressed: () => Navigator.pushNamed(
-                            context,
-                            Replies.id,
-                            arguments: widget.post,
-                          ),
+                    Container(
+                      margin: const EdgeInsets.only(right: 5.0),
+                      child: Text(
+                        widget.snapshotUser.data!.name!,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
                         ),
-                      ],
+                      ),
                     ),
-                    Row(
-                      children: [
-                        IconButton(
-                          icon: new Icon(
-                            widget.snapshotRetweet.data!
-                                ? Icons.cancel
-                                : Icons.repeat,
-                            color: Colors.blue,
-                            size: 30.0,
-                          ),
-                          onPressed: () => _postService.retweet(
-                            widget.post,
-                            widget.snapshotRetweet.data!,
-                          ),
-                        ),
-                        Text(widget.post.numRetweets.toString())
-                      ],
+                    Text(
+                      '@${widget.snapshotUser.data!.name!} · ${UtilsService.timeAgoSinceDate(widget.post.timestamp!.toDate().toString())}',
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
                     ),
-                    Row(
-                      children: [
-                        IconButton(
-                          icon: new Icon(
-                            widget.snapshotLike.data!
-                                ? Icons.favorite
-                                : Icons.favorite_border,
-                            color: Colors.blue,
-                            size: 30.0,
-                          ),
-                          onPressed: () {
-                            _postService.likePost(
-                              widget.post,
-                              widget.snapshotLike.data!,
-                            );
-                          },
-                        ),
-                        Text(widget.post.numLikes.toString())
-                      ],
-                    )
+                    Spacer(),
+                    IconButton(
+                      icon: Icon(
+                        Icons.arrow_drop_down_rounded,
+                        size: 14.0,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () {},
+                    ),
                   ],
-                )
+                ),
+                Text(
+                  widget.post.text!,
+                  overflow: TextOverflow.clip,
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 10.0, right: 20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: new Icon(
+                              Icons.chat_bubble_outline,
+                              size: 16.0,
+                              color: Colors.black45,
+                            ),
+                            onPressed: () => Navigator.pushNamed(
+                              context,
+                              Replies.id,
+                              arguments: widget.post,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: new Icon(
+                              widget.snapshotRetweet.data!
+                                  ? Icons.cancel
+                                  : Icons.repeat,
+                              size: 16.0,
+                              color: Colors.black45,
+                            ),
+                            onPressed: () => _postService.retweet(
+                              widget.post,
+                              widget.snapshotRetweet.data!,
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.all(6.0),
+                            child: Text(
+                              widget.post.numRetweets.toString(),
+                              style: TextStyle(
+                                color: Colors.black45,
+                                fontSize: 14.0,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: new Icon(
+                              widget.snapshotLike.data!
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color: widget.snapshotLike.data!
+                                  ? Colors.blue
+                                  : Colors.black45,
+                              size: 16.0,
+                            ),
+                            onPressed: () {
+                              _postService.likePost(
+                                widget.post,
+                                widget.snapshotLike.data!,
+                              );
+                            },
+                          ),
+                          Container(
+                            margin: const EdgeInsets.all(6.0),
+                            child: Text(
+                              widget.post.numLikes.toString(),
+                              style: TextStyle(
+                                color: Colors.black45,
+                                fontSize: 14.0,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.share,
+                            size: 16.0,
+                            color: Colors.black45,
+                          ),
+                          Container(
+                            margin: const EdgeInsets.all(6.0),
+                            child: Text(
+                              '',
+                              style: TextStyle(
+                                color: Colors.black45,
+                                fontSize: 14.0,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
-          Divider(),
         ],
       ),
     );
+
+    // return ListTile(
+    //   title: Padding(
+    //     padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+    //     child: Column(
+    //       crossAxisAlignment: CrossAxisAlignment.start,
+    //       children: [
+    //         if (widget.snapshotRetweet.data! || widget.retweet) Text("Retweet"),
+    //         SizedBox(height: 20),
+    //         Row(
+    //           children: [
+    //             widget.snapshotUser.data!.profileImageUrl != ''
+    //                 ? CircleAvatar(
+    //                     radius: 20,
+    //                     backgroundImage: NetworkImage(
+    //                       widget.snapshotUser.data!.profileImageUrl!,
+    //                     ),
+    //                   )
+    //                 : Icon(
+    //                     Icons.person,
+    //                     size: 40,
+    //                   ),
+    //             // SizedBox(width: 10),
+    //             // Text(widget.snapshotUser.data!.name!)
+    //           ],
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    //   subtitle: Column(
+    //     crossAxisAlignment: CrossAxisAlignment.start,
+    //     children: [
+    //       Padding(
+    //         padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+    //         child: Column(
+    //           crossAxisAlignment: CrossAxisAlignment.start,
+    //           children: [
+    //             Text(widget.post.text!),
+    //             SizedBox(height: 20),
+    //             Text(widget.post.timestamp!.toDate().toString()),
+    //             SizedBox(height: 20),
+    //             Row(
+    //               mainAxisAlignment: MainAxisAlignment.spaceAround,
+    //               children: [
+    //                 Row(
+    //                   children: [
+    //                     IconButton(
+    //                       icon: new Icon(
+    //                         Icons.chat_bubble_outline,
+    //                         color: Colors.blue,
+    //                         size: 30.0,
+    //                       ),
+    //                       onPressed: () => Navigator.pushNamed(
+    //                         context,
+    //                         Replies.id,
+    //                         arguments: widget.post,
+    //                       ),
+    //                     ),
+    //                   ],
+    //                 ),
+    //                 Row(
+    //                   children: [
+    //                     IconButton(
+    //                       icon: new Icon(
+    //                         widget.snapshotRetweet.data!
+    //                             ? Icons.cancel
+    //                             : Icons.repeat,
+    //                         color: Colors.blue,
+    //                         size: 30.0,
+    //                       ),
+    //                       onPressed: () => _postService.retweet(
+    //                         widget.post,
+    //                         widget.snapshotRetweet.data!,
+    //                       ),
+    //                     ),
+    //                     Text(widget.post.numRetweets.toString())
+    //                   ],
+    //                 ),
+    //                 Row(
+    //                   children: [
+    //                     IconButton(
+    //                       icon: new Icon(
+    //                         widget.snapshotLike.data!
+    //                             ? Icons.favorite
+    //                             : Icons.favorite_border,
+    //                         color: Colors.blue,
+    //                         size: 30.0,
+    //                       ),
+    //                       onPressed: () {
+    //                         _postService.likePost(
+    //                           widget.post,
+    //                           widget.snapshotLike.data!,
+    //                         );
+    //                       },
+    //                     ),
+    //                     Text(widget.post.numLikes.toString())
+    //                   ],
+    //                 )
+    //               ],
+    //             )
+    //           ],
+    //         ),
+    //       ),
+    //       Divider(),
+    //     ],
+    //   ),
+    // );
   }
 }
