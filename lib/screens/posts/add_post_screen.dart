@@ -20,7 +20,8 @@ class _AddPostState extends State<AddPost> {
         title: Text('Tweet'),
         actions: <Widget>[
           RoundedButton(
-            title: "Tweet",
+            title: "Send Tweet",
+            color: Colors.blueGrey,
             onPressed: () async {
               _postService.savePost(text);
               Navigator.pop(context);
