@@ -73,9 +73,11 @@ class _LoginScreenState extends State<LoginScreen> {
               RoundedButton(
                 title: 'Log In',
                 onPressed: () async {
-                  setState(() {
-                    showSpinner = true;
-                  },);
+                  setState(
+                    () {
+                      showSpinner = true;
+                    },
+                  );
                   try {
                     _auth.signIn(
                       email,
@@ -88,9 +90,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   } catch (e) {
                     print(e);
                   } finally {
-                    setState(() {
-                      showSpinner = false;
-                    },);
+                    setState(
+                      () {
+                        showSpinner = false;
+                      },
+                    );
                   }
                 },
                 color: Colors.lightBlueAccent,
