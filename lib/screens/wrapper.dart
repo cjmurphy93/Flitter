@@ -40,7 +40,7 @@ class Wrapper extends StatelessWidget {
         AddPost.id: (context) => AddPost(),
         Profile.id: (context) => Profile(),
         EditProfile.id: (context) => EditProfile(),
-        // WelcomeScreen.id: (context) => WelcomeScreen(),
+        WelcomeScreen.id: (context) => WelcomeScreen(),
         // LoginScreen.id: (context) => LoginScreen(),
         // RegistrationScreen.id: (context) => RegistrationScreen(),
         Replies.id: (context) => Replies(),

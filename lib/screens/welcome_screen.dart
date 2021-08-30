@@ -52,7 +52,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Row(
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Hero(
                   tag: 'logo',
@@ -82,7 +83,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     TypewriterAnimatedText(
                       'made by',
                       textStyle: TextStyle(
-                        fontSize: 30.0,
+                        fontSize: 45.0,
                         fontWeight: FontWeight.w900,
                       ),
                       // Change this to make it faster or slower
@@ -91,7 +92,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     ColorizeAnimatedText(
                       'Connor Murphy',
                       textStyle: TextStyle(
-                        fontSize: 35.0,
+                        fontSize: 45.0,
                         fontWeight: FontWeight.w900,
                         fontFamily: 'Horizon',
                       ),
