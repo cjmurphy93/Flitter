@@ -21,29 +21,30 @@ class UtilsService {
 
   static String? timeAgoSinceDate(String dateString,
       {bool numericDates = true}) {
-    DateTime notificationDate =
-    DateTime.parse(dateString);
+    DateTime notificationDate = DateTime.parse(dateString);
     final date2 = DateTime.now();
     final difference = date2.difference(notificationDate);
+    final thisYearDate = DateFormat('dd MMM').format(notificationDate);
+    final lastYearDate = DateFormat('dd MMM yy').format(notificationDate);
 
-    if (difference.inDays > 8) {
-      return dateString;
+    if (date2.year > notificationDate.year) {
+      return lastYearDate;
     } else if ((difference.inDays / 7).floor() >= 1) {
-      return (numericDates) ? '1 week ago' : 'Last week';
+      return thisYearDate;
     } else if (difference.inDays >= 2) {
-      return '${difference.inDays} days ago';
+      return '${difference.inDays}d';
     } else if (difference.inDays >= 1) {
-      return (numericDates) ? '1 day ago' : 'Yesterday';
+      return (numericDates) ? '1d' : 'Yesterday';
     } else if (difference.inHours >= 2) {
-      return '${difference.inHours} hours ago';
+      return '${difference.inHours}h';
     } else if (difference.inHours >= 1) {
-      return (numericDates) ? '1 hour ago' : 'An hour ago';
+      return (numericDates) ? '1h' : 'An hour ago';
     } else if (difference.inMinutes >= 2) {
-      return '${difference.inMinutes} minutes ago';
+      return '${difference.inMinutes}m';
     } else if (difference.inMinutes >= 1) {
-      return (numericDates) ? '1 minute ago' : 'A minute ago';
+      return (numericDates) ? '1m' : 'A minute ago';
     } else if (difference.inSeconds >= 3) {
-      return '${difference.inSeconds} seconds ago';
+      return '${difference.inSeconds}s';
     } else {
       return 'Just now';
     }

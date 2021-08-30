@@ -72,24 +72,28 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               RoundedButton(
                 title: 'Register',
                 onPressed: () async {
-                  setState(() {
-                    showSpinner = true;
-                  });
+                  setState(
+                    () {
+                      showSpinner = true;
+                    },
+                  );
                   try {
                     _auth.signUp(
                       email,
                       password,
                     );
+                  } catch (e) {
+                    print(e);
+                  } finally {
+                    setState(
+                      () {
+                        showSpinner = false;
+                      },
+                    );
                     Navigator.pushNamed(
                       context,
                       '/',
                     );
-                  } catch (e) {
-                    print(e);
-                  } finally {
-                    setState(() {
-                      showSpinner = false;
-                    });
                   }
                 },
                 color: Colors.blueAccent,

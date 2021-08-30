@@ -34,9 +34,11 @@ class _AddPostState extends State<AddPost> {
         child: new Form(
           child: TextFormField(
             onChanged: (val) {
-              setState(() {
-                text = val;
-              });
+              setState(
+                () {
+                  text = val;
+                },
+              );
             },
           ),
         ),
