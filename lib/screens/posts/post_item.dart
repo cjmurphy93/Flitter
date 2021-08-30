@@ -23,7 +23,6 @@ class PostItem extends StatefulWidget {
 
 class _PostItemState extends State<PostItem> {
   PostService _postService = PostService();
-  // UtilsService _util = UtilsService();
   @override
   Widget build(BuildContext context) {
     return Container(

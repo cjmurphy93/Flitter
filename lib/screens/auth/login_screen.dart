@@ -83,10 +83,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       email,
                       password,
                     );
-                    Navigator.pushNamed(
-                      context,
-                      '/',
-                    );
                   } catch (e) {
                     print(e);
                   } finally {
@@ -94,6 +90,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       () {
                         showSpinner = false;
                       },
+                    );
+                    Navigator.pushNamed(
+                      context,
+                      '/',
                     );
                   }
                 },

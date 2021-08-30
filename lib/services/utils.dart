@@ -26,15 +26,10 @@ class UtilsService {
     final difference = date2.difference(notificationDate);
     final thisYearDate = DateFormat('dd MMM').format(notificationDate);
     final lastYearDate = DateFormat('dd MMM yy').format(notificationDate);
-// print(lastYearDate);
 
-
-    // if (difference.inDays > 8) {
     if (date2.year > notificationDate.year) {
       return lastYearDate;
-      } else if ((difference.inDays / 7).floor() >= 1) {
-      // return (numericDates) ? '1 week ago' : 'Last week';
-    // } else if (dif) {
+    } else if ((difference.inDays / 7).floor() >= 1) {
       return thisYearDate;
     } else if (difference.inDays >= 2) {
       return '${difference.inDays}d';

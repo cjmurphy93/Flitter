@@ -3,6 +3,7 @@ import 'auth/login_screen.dart';
 import 'auth/registration_screen.dart';
 import 'package:flitter/components/rounded_button.dart';
 import 'package:flitter/services/auth_services.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static String id = 'welcome_screen';
@@ -16,7 +17,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   //   with SingleTickerProviderStateMixin {
   // AnimationController controller;
   // Animation animation;
-
+  //
   // @override
   // void initState() {
   //   super.initState();
@@ -60,29 +61,53 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     height: 60.0,
                   ),
                 ),
-                Text(
-                  'Flitter',
-                  style: TextStyle(
-                    fontSize: 45.0,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-                // AnimatedTextKit(
-                //   animatedTexts: [
-                //     TypewriterAnimatedText(
-                //       'Flash Chat',
-                //       textStyle: TextStyle(
-                //         fontSize: 45.0,
-                //         fontWeight: FontWeight.w900,
-                //       ),
-                //       // Change this to make it faster or slower
-                //       speed: Duration(milliseconds: 350),
-                //     ),
-                //   ],
-                //   // You could replace repeatForever to a fixed number of repeats
-                //   // with totalRepeatCount: X, where X is the repeats you want.
-                //   repeatForever: true,
+                // Text(
+                //   'Flitter',
+                //   style: TextStyle(
+                //     fontSize: 45.0,
+                //     fontWeight: FontWeight.w900,
+                //   ),
                 // ),
+                AnimatedTextKit(
+                  animatedTexts: [
+                    TypewriterAnimatedText(
+                      'Flitter',
+                      textStyle: TextStyle(
+                        fontSize: 45.0,
+                        fontWeight: FontWeight.w900,
+                      ),
+                      // Change this to make it faster or slower
+                      speed: Duration(milliseconds: 150),
+                    ),
+                    TypewriterAnimatedText(
+                      'made by',
+                      textStyle: TextStyle(
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.w900,
+                      ),
+                      // Change this to make it faster or slower
+                      speed: Duration(milliseconds: 100),
+                    ),
+                    ColorizeAnimatedText(
+                      'Connor Murphy',
+                      textStyle: TextStyle(
+                        fontSize: 35.0,
+                        fontWeight: FontWeight.w900,
+                        fontFamily: 'Horizon',
+                      ),
+                      colors: [
+                        Colors.blue,
+                        Colors.blueGrey,
+                        Colors.black,
+                      ],
+                      // Change this to make it faster or slower
+                      speed: Duration(milliseconds: 200),
+                    ),
+                  ],
+                  // You could replace repeatForever to a fixed number of repeats
+                  // with totalRepeatCount: X, where X is the repeats you want.
+                  repeatForever: true,
+                ),
               ],
             ),
             SizedBox(

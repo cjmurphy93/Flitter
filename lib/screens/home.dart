@@ -37,7 +37,10 @@ class _HomeState extends State<Home> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, AddPost.id);
+          Navigator.pushNamed(
+            context,
+            AddPost.id,
+          );
         },
         child: Icon(
           Icons.edit,
