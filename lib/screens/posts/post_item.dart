@@ -85,6 +85,7 @@ class _PostItemState extends State<PostItem> {
                       widget.post.text!,
                       overflow: TextOverflow.clip,
                     ),
+
                     Container(
                       margin: const EdgeInsets.only(top: 10.0, right: 20.0),
                       child: Row(

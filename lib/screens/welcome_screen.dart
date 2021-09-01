@@ -89,18 +89,18 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       // Change this to make it faster or slower
                       speed: Duration(milliseconds: 100),
                     ),
-                    ColorizeAnimatedText(
+                    TypewriterAnimatedText(
                       'Connor Murphy',
                       textStyle: TextStyle(
                         fontSize: 45.0,
                         fontWeight: FontWeight.w900,
                         fontFamily: 'Horizon',
                       ),
-                      colors: [
-                        Colors.blue,
-                        Colors.blueGrey,
-                        Colors.black,
-                      ],
+                      // colors: [
+                      //   Colors.blue,
+                      //   Colors.blueGrey,
+                      //   Colors.black,
+                      // ],
                       // Change this to make it faster or slower
                       speed: Duration(milliseconds: 200),
                     ),
