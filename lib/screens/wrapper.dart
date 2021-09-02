@@ -41,8 +41,8 @@ class Wrapper extends StatelessWidget {
         Profile.id: (context) => Profile(),
         EditProfile.id: (context) => EditProfile(),
         WelcomeScreen.id: (context) => WelcomeScreen(),
-        // LoginScreen.id: (context) => LoginScreen(),
-        // RegistrationScreen.id: (context) => RegistrationScreen(),
+        LoginScreen.id: (context) => LoginScreen(),
+        RegistrationScreen.id: (context) => RegistrationScreen(),
         Replies.id: (context) => Replies(),
       },
     );
