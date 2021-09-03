@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flitter/models/post.dart';
 import 'package:flitter/models/user.dart';
 import 'package:flitter/services/post_services.dart';
+import 'package:flitter/services/user_services.dart';
 import 'package:flitter/screens/posts/replies.dart';
 import 'package:flitter/services/utils.dart';
 
@@ -11,9 +12,10 @@ class PostItem extends StatefulWidget {
   final AsyncSnapshot<bool> snapshotLike;
   final AsyncSnapshot<bool> snapshotRetweet;
   final bool retweet;
+  final String? retweetUser;
 
   PostItem(this.post, this.snapshotUser, this.snapshotLike,
-      this.snapshotRetweet, this.retweet,
+      this.snapshotRetweet, this.retweet, this.retweetUser,
       {Key? key})
       : super(key: key);
 
@@ -23,13 +25,14 @@ class PostItem extends StatefulWidget {
 
 class _PostItemState extends State<PostItem> {
   PostService _postService = PostService();
+  UserService _userService = UserService();
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
       child: Column(
         children: [
-          if (widget.snapshotRetweet.data! || widget.retweet) Text("Retweet"),
+          if (widget.snapshotRetweet.data! || widget.retweet) Text("${widget.retweetUser} Retweet"),
           SizedBox(height: 20),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,

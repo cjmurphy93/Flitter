@@ -132,4 +132,11 @@ class UserService {
     final users = querySnapshot.docs.map((doc) => doc.id).toList();
     return users;
   }
+
+  Future<UserModel?> getRetweetUserById(String id) async {
+    DocumentSnapshot<Map<String, dynamic>> retweetUserSnap =
+    await FirebaseFirestore.instance.collection("users").doc(id).get();
+
+    return _userFromFirebaseSnapshot(retweetUserSnap);
+  }
 }

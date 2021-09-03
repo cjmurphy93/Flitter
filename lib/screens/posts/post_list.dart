@@ -27,6 +27,17 @@ class _PostsListState extends State<PostsList> {
       itemBuilder: (context, index) {
         final post = posts[index];
         if (post.retweet!) {
+          // return FutureBuilder(
+          //   future: _userService.getRetweetUserById(post.creator!),
+          //   builder: (
+          //     BuildContext context,
+          //     AsyncSnapshot<UserModel?> snapshotUser,
+          //   ) {
+          //     if (!snapshotUser.hasData) {
+          //       return Center(
+          //         child: CircularProgressIndicator(),
+          //       );
+          //     }
           return FutureBuilder(
             future: _postService.getPostById(post.originalId.toString()),
             builder: (
@@ -38,9 +49,24 @@ class _PostsListState extends State<PostsList> {
                   child: CircularProgressIndicator(),
                 );
               }
-              return mainPost(
-                snapshotPost.data!,
-                true,
+              return StreamBuilder(
+                stream: _userService.getUserInfo(post.creator!),
+                builder: (
+                  BuildContext context,
+                  AsyncSnapshot<UserModel?> snapshotUser,
+                ) {
+                  if (!snapshotUser.hasData) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  return mainPost(
+                    snapshotPost.data!,
+                    true,
+                    snapshotUser.data!.name!,
+                  );
+                },
               );
             },
           );
@@ -48,12 +74,14 @@ class _PostsListState extends State<PostsList> {
         return mainPost(
           post,
           false,
+          null,
         );
       },
     );
   }
 
-  StreamBuilder<UserModel?> mainPost(PostModel post, bool retweet) {
+  StreamBuilder<UserModel?> mainPost(
+      PostModel post, bool retweet, String? retweetUser) {
     return StreamBuilder(
       stream: _userService.getUserInfo(post.creator),
       builder: (
@@ -65,7 +93,8 @@ class _PostsListState extends State<PostsList> {
             child: CircularProgressIndicator(),
           );
         }
-
+        // print(snapshotUser.data!.id);
+        // print(post.creator);
 
         return StreamBuilder(
           stream: _postService.getCurrentUserLike(post),
@@ -97,6 +126,7 @@ class _PostsListState extends State<PostsList> {
                   snapshotLike,
                   snapshotRetweet,
                   retweet,
+                  retweetUser,
                 );
               },
             );
