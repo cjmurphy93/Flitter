@@ -27,57 +27,20 @@ class _PostsListState extends State<PostsList> {
       itemBuilder: (context, index) {
         final post = posts[index];
         if (post.retweet!) {
-          // return FutureBuilder(
-          //   future: _userService.getRetweetUserById(post.creator!),
-          //   builder: (
-          //     BuildContext context,
-          //     AsyncSnapshot<UserModel?> snapshotUser,
-          //   ) {
-          //     if (!snapshotUser.hasData) {
-          //       return Center(
-          //         child: CircularProgressIndicator(),
-          //       );
-          //     }
           return FutureBuilder(
             future: _postService.getPostById(post.originalId.toString()),
             builder: (
-              BuildContext context,
-              AsyncSnapshot<PostModel?> snapshotPost,
-            ) {
+                BuildContext context,
+                AsyncSnapshot<PostModel?> snapshotPost,
+                ) {
               if (!snapshotPost.hasData) {
                 return Center(
                   child: CircularProgressIndicator(),
                 );
               }
-              // return StreamBuilder(
-              //   stream: _userService.getUserInfo(post.creator!),
-              //   builder: (
-              //     BuildContext context,
-              //     AsyncSnapshot<UserModel?> snapshotUser,
-              //   ) {
-              //     if (!snapshotUser.hasData) {
-              //       return Center(
-              //         child: CircularProgressIndicator(),
-              //       );
-              //     }
-              return FutureBuilder(
-                future: _userService.getRetweetUserById(post.creator!),
-                builder: (
-                  BuildContext context,
-                  AsyncSnapshot<UserModel?> snapshotRetweetUser,
-                ) {
-                  if (!snapshotRetweetUser.hasData) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-
-                  return mainPost(
-                    snapshotPost.data!,
-                    true,
-                    snapshotRetweetUser.data!,
-                  );
-                },
+              return mainPost(
+                snapshotPost.data!,
+                true,
               );
             },
           );
@@ -85,34 +48,31 @@ class _PostsListState extends State<PostsList> {
         return mainPost(
           post,
           false,
-          null,
         );
       },
     );
   }
 
-  StreamBuilder<UserModel?> mainPost(
-      PostModel post, bool retweet, UserModel? retweetUser) {
+  StreamBuilder<UserModel?> mainPost(PostModel post, bool retweet) {
     return StreamBuilder(
       stream: _userService.getUserInfo(post.creator),
       builder: (
-        BuildContext context,
-        AsyncSnapshot<UserModel?> snapshotUser,
-      ) {
+          BuildContext context,
+          AsyncSnapshot<UserModel?> snapshotUser,
+          ) {
         if (!snapshotUser.hasData) {
           return Center(
             child: CircularProgressIndicator(),
           );
         }
-        // print(snapshotUser.data!.id);
-        // print(post.creator);
+
 
         return StreamBuilder(
           stream: _postService.getCurrentUserLike(post),
           builder: (
-            BuildContext context,
-            AsyncSnapshot<bool> snapshotLike,
-          ) {
+              BuildContext context,
+              AsyncSnapshot<bool> snapshotLike,
+              ) {
             if (!snapshotLike.hasData) {
               return Center(
                 child: CircularProgressIndicator(),
@@ -122,47 +82,22 @@ class _PostsListState extends State<PostsList> {
             return StreamBuilder(
               stream: _postService.getCurrentUserRetweet(post),
               builder: (
-                BuildContext context,
-                AsyncSnapshot<bool> snapshotRetweet,
-              ) {
+                  BuildContext context,
+                  AsyncSnapshot<bool> snapshotRetweet,
+                  ) {
                 if (!snapshotRetweet.hasData) {
                   return Center(
                     child: CircularProgressIndicator(),
                   );
                 }
-                // if (retweet) {
-                //   return StreamBuilder(
-                //     stream: _userService.getUserInfo(retweetUser),
-                //     builder: (
-                //       BuildContext context,
-                //       AsyncSnapshot<UserModel?> snapshotRetweetUser,
-                //     ) {
-                //       if (!snapshotRetweetUser.hasData) {
-                //         return Center(
-                //           child: CircularProgressIndicator(),
-                //         );
-                //       }
-                //
-                //       return PostItem(
-                //         post,
-                //         snapshotUser,
-                //         snapshotLike,
-                //         snapshotRetweet,
-                //         retweet,
-                //         snapshotRetweetUser,
-                //       );
-                //     },
-                //   );
-                // } else {
+
                 return PostItem(
                   post,
                   snapshotUser,
                   snapshotLike,
                   snapshotRetweet,
                   retweet,
-                  retweetUser,
                 );
-                // }
               },
             );
           },

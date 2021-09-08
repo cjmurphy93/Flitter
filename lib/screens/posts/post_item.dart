@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flitter/models/post.dart';
 import 'package:flitter/models/user.dart';
 import 'package:flitter/services/post_services.dart';
-import 'package:flitter/services/user_services.dart';
 import 'package:flitter/screens/posts/replies.dart';
 import 'package:flitter/services/utils.dart';
 
@@ -12,10 +11,9 @@ class PostItem extends StatefulWidget {
   final AsyncSnapshot<bool> snapshotLike;
   final AsyncSnapshot<bool> snapshotRetweet;
   final bool retweet;
-  final UserModel? retweetUser;
 
   PostItem(this.post, this.snapshotUser, this.snapshotLike,
-      this.snapshotRetweet, this.retweet, this.retweetUser,
+      this.snapshotRetweet, this.retweet,
       {Key? key})
       : super(key: key);
 
@@ -25,16 +23,13 @@ class PostItem extends StatefulWidget {
 
 class _PostItemState extends State<PostItem> {
   PostService _postService = PostService();
-  UserService _userService = UserService();
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
       child: Column(
         children: [
-          if (widget.snapshotRetweet.data! ||
-              widget.retweet && widget.retweetUser != null)
-            Text("${widget.retweetUser!.name} Retweet"),
+          if (widget.snapshotRetweet.data! || widget.retweet) Text("Retweet"),
           SizedBox(height: 20),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,15 +38,15 @@ class _PostItemState extends State<PostItem> {
                 margin: const EdgeInsets.all(10.0),
                 child: widget.snapshotUser.data!.profileImageUrl != ''
                     ? CircleAvatar(
-                        radius: 20,
-                        backgroundImage: NetworkImage(
-                          widget.snapshotUser.data!.profileImageUrl!,
-                        ),
-                      )
+                  radius: 20,
+                  backgroundImage: NetworkImage(
+                    widget.snapshotUser.data!.profileImageUrl!,
+                  ),
+                )
                     : Icon(
-                        Icons.person,
-                        size: 40,
-                      ),
+                  Icons.person,
+                  size: 40,
+                ),
               ),
               Expanded(
                 child: Column(
@@ -90,6 +85,7 @@ class _PostItemState extends State<PostItem> {
                       widget.post.text!,
                       overflow: TextOverflow.clip,
                     ),
+
                     Container(
                       margin: const EdgeInsets.only(top: 10.0, right: 20.0),
                       child: Row(
@@ -201,3 +197,4 @@ class _PostItemState extends State<PostItem> {
     );
   }
 }
+
