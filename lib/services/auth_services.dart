@@ -32,6 +32,21 @@ class AuthService {
         'name': email,
         'email': email,
       });
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.user!.uid)
+          .collection('following')
+          .doc(user.user!.uid)
+          .set({});
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.user!.uid)
+          .collection('followers')
+          .doc(user.user!.uid)
+          .set({});
+
       _userFromFirebaseUser(user.user);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {

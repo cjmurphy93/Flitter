@@ -12,7 +12,7 @@ class PostItem extends StatefulWidget {
   final AsyncSnapshot<bool> snapshotLike;
   final AsyncSnapshot<bool> snapshotRetweet;
   final bool retweet;
-  final String? retweetUser;
+  final UserModel? retweetUser;
 
   PostItem(this.post, this.snapshotUser, this.snapshotLike,
       this.snapshotRetweet, this.retweet, this.retweetUser,
@@ -32,7 +32,9 @@ class _PostItemState extends State<PostItem> {
       color: Colors.white,
       child: Column(
         children: [
-          if (widget.snapshotRetweet.data! || widget.retweet) Text("${widget.retweetUser} Retweet"),
+          if (widget.snapshotRetweet.data! ||
+              widget.retweet && widget.retweetUser != null)
+            Text("${widget.retweetUser!.name} Retweet"),
           SizedBox(height: 20),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,7 +90,6 @@ class _PostItemState extends State<PostItem> {
                       widget.post.text!,
                       overflow: TextOverflow.clip,
                     ),
-
                     Container(
                       margin: const EdgeInsets.only(top: 10.0, right: 20.0),
                       child: Row(

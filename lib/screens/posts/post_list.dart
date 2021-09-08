@@ -49,13 +49,24 @@ class _PostsListState extends State<PostsList> {
                   child: CircularProgressIndicator(),
                 );
               }
-              return StreamBuilder(
-                stream: _userService.getUserInfo(post.creator!),
+              // return StreamBuilder(
+              //   stream: _userService.getUserInfo(post.creator!),
+              //   builder: (
+              //     BuildContext context,
+              //     AsyncSnapshot<UserModel?> snapshotUser,
+              //   ) {
+              //     if (!snapshotUser.hasData) {
+              //       return Center(
+              //         child: CircularProgressIndicator(),
+              //       );
+              //     }
+              return FutureBuilder(
+                future: _userService.getRetweetUserById(post.creator!),
                 builder: (
                   BuildContext context,
-                  AsyncSnapshot<UserModel?> snapshotUser,
+                  AsyncSnapshot<UserModel?> snapshotRetweetUser,
                 ) {
-                  if (!snapshotUser.hasData) {
+                  if (!snapshotRetweetUser.hasData) {
                     return Center(
                       child: CircularProgressIndicator(),
                     );
@@ -64,7 +75,7 @@ class _PostsListState extends State<PostsList> {
                   return mainPost(
                     snapshotPost.data!,
                     true,
-                    snapshotUser.data!.name!,
+                    snapshotRetweetUser.data!,
                   );
                 },
               );
@@ -81,7 +92,7 @@ class _PostsListState extends State<PostsList> {
   }
 
   StreamBuilder<UserModel?> mainPost(
-      PostModel post, bool retweet, String? retweetUser) {
+      PostModel post, bool retweet, UserModel? retweetUser) {
     return StreamBuilder(
       stream: _userService.getUserInfo(post.creator),
       builder: (
@@ -119,7 +130,30 @@ class _PostsListState extends State<PostsList> {
                     child: CircularProgressIndicator(),
                   );
                 }
-
+                // if (retweet) {
+                //   return StreamBuilder(
+                //     stream: _userService.getUserInfo(retweetUser),
+                //     builder: (
+                //       BuildContext context,
+                //       AsyncSnapshot<UserModel?> snapshotRetweetUser,
+                //     ) {
+                //       if (!snapshotRetweetUser.hasData) {
+                //         return Center(
+                //           child: CircularProgressIndicator(),
+                //         );
+                //       }
+                //
+                //       return PostItem(
+                //         post,
+                //         snapshotUser,
+                //         snapshotLike,
+                //         snapshotRetweet,
+                //         retweet,
+                //         snapshotRetweetUser,
+                //       );
+                //     },
+                //   );
+                // } else {
                 return PostItem(
                   post,
                   snapshotUser,
@@ -128,6 +162,7 @@ class _PostsListState extends State<PostsList> {
                   retweet,
                   retweetUser,
                 );
+                // }
               },
             );
           },
